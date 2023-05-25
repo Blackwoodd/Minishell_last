@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/05/24 14:56:21 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:35:54 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 # define EXPORT "export"
 # define UNSET "unset"
 
+///////////////// list_commande.c /////////////////
+
+void	list_of_command(char *first, char *seconde, char **env);
+
 //////////////////// signal.c /////////////////////
 
 void	signal_crtl(void);
@@ -39,7 +43,7 @@ void	signal_crtl(void);
 //////////////////// commandes.c //////////////////
 
 void	commande_echo(char *first, char *word);
-int		commande_pwd(void);
+void	commande_pwd(void);
 int		commande_cd(char *word);
 
 ///////////////// takeword.c ////////////////////
@@ -56,7 +60,7 @@ int		compare(char *word, char *tmp);
 void	commande_env(char **env);
 void	commande_export(char **env);
 void	commande_unset(char **env, char *var_name);
-void	commande_exit(char *input);
+void	commande_exit(char *seconde);
 
 ////////////// all_printf.c ////////////////////
 

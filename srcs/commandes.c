@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:24:32 by nbechon           #+#    #+#             */
-/*   Updated: 2023/05/23 15:15:26 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:31:52 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,14 @@ void	commande_echo(char *first, char *word)
 		printf ("%s", word);
 }
 
-//PAS FORCEMENT OPTI
-int	commande_pwd(void)
+void	commande_pwd(void)
 {
 	char	cwd[1000];
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		printf("%s\n", cwd);
 	else
-	{
 		perror("PWD");
-		return (1);
-	}
-	return (0);
 }
 
 int	commande_cd(char *word)

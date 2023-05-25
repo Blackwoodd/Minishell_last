@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:59:33 by nbechon           #+#    #+#             */
-/*   Updated: 2023/05/23 14:41:08 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:34:28 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	handle_sigint(int i)
 {
 	i = 0;
-	printf("\nCombinaison Ctrl+C détectée. Cette combinaison doit jsute relancer le prompt.\n");
+	printf("\nCombinaison Ctrl+C détectée.");
+	printf(" Cette combinaison doit jsute relancer le prompt.\n");
 }
 
 void	handle_sigquit(int signum)

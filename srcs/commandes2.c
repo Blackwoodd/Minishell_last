@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:14:28 by nbechon           #+#    #+#             */
-/*   Updated: 2023/05/24 14:54:59 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:48:53 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,65 +65,32 @@ void	commande_unset(char **env, char *word)
 	}
 }
 
-// void	printf_exit2(void)
-// {
-// 	printf ("bash: exit: too many arguments\n");
-// 	return ;
-// }
-
-// void	printf_exit(char *arg)
-// {
-// 	printf ("bash: exit: %s: numeric argument required\n", arg);
-// 	exit (0);
-// }
-
-void	commande_exit(char *input)
+void	commande_exit(char *seconde)
 {
-	char	arg[2000];
-	int		i;
-	int		count;
-	int		j;
+	int	i;
 
-	j = 0;
-	count = 0;
 	i = 0;
-	while (input[i] != ' ')
-		i++;
-	i++;
-	j = i;
-	while (input[j])
+	if (!seconde)
+	{	
+		printf ("exit\n");
+		exit (0);
+	}
+	while (seconde[i])
 	{
-		if (input[j] == ' ')
+		if (seconde[i] == ' ')
+		{	
 			printf_exit2();
-		j++;
-	}
-	j = 0;
-	while (input[i])
-	{
-		if (input[i] == ' ')
-			break ;
-		arg[j] = input[i];
-		j++;
+			return ;
+		}
+		if (seconde[i] < '0' || seconde[i] > '9')
+			printf_exit(seconde);
+		if ((seconde[i] >= 'a' && seconde[i] >= 'z')
+			|| (seconde[i] >= 'A' && seconde[i] >= 'Z'))
+			printf_exit(seconde);
+		if (i >= 20)
+			printf_exit(seconde);
 		i++;
 	}
-	arg[j] = '\0';
 	printf ("exit\n");
-	i = 0;
-	j = 0;
-	while (arg[i])
-	{
-		if (arg[i] == ' ')
-			j++;
-		if (arg[i] >= '0' || arg[i] <= '9')
-			count++;
-		if ((arg[i] >= 'a' && arg[i] <= 'z')
-			|| (arg[i] >= 'A' && arg[i] <= 'Z'))
-			printf_exit(arg);
-		i++;
-	}
-	if (j >= 2)
-		printf_exit2();
-	if (count != i || count >= 20)
-		printf_exit(arg);
 	exit (0);
 }
