@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:05:52 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/31 10:36:59 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:59:53 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	get_env_var_valnorm(t_env *envar, char *var, char **value, int i)
 	* Finally, it returns the resulting value of the environment variable.
 */
 
-char    *get_env_var_val(t_env *envar, char *var)
+char	*get_env_var_val(t_env *envar, char *var)
 {
 	int		i;
 	char	*value;
@@ -114,12 +114,12 @@ char    *get_env_var_val(t_env *envar, char *var)
 				value = ft_calloc(1, sizeof(char));
 			else
 				value = ft_strdup(value);
-			break;
+			break ;
 		}
 		else if (ft_strcmp(var, envar->env_var[i++]) == 0)
 		{
 			value = ft_calloc(1, sizeof(char));
-			break;
+			break ;
 		}
 	}
 	get_env_var_valnorm(envar, var, &value, i);
@@ -141,8 +141,9 @@ t_env	*init_envar(char **envp)
 		envar->envp = envp;
 		envar->env_var = ft_str_arr_dup(envp);
 		envar->pwd = get_env_var_val(envar, "PWD");
-		envar->oldpwd = get_env_var_val(envar,"OLDPWD");
-		if (envar->env_var != NULL && envar->pwd != NULL && envar->oldpwd != NULL)
+		envar->oldpwd = get_env_var_val(envar, "OLDPWD");
+		if (envar->env_var != NULL && envar->pwd != NULL
+			&& envar->oldpwd != NULL)
 			return (envar);
 	}
 	return (NULL);

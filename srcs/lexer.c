@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/09 17:11:09 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:13:08 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab &&tab[i])
+	while (tab && tab[i])
 	{
 		ft_free_str(&tab[i]);
 		i++;
@@ -37,7 +37,6 @@ void	*free_token(char **token, char **resized)
 	reset_lex_token();
 	return (NULL);
 }
-
 
 /*
 	The functionis responsible for extracting 
@@ -59,22 +58,22 @@ void	*free_token(char **token, char **resized)
 	* Finally, the function returns the extracted next_token.
 */
 
-char    *get_next_token(char **token)
+char	*get_next_token(char **token)
 {
-	char    *next_token;
-	char    *tmp;
-	char    next_spe;
-	int     i;
+	char	*next_token;
+	char	*tmp;
+	char	next_spe;
+	int		i;
 
-	tmp= *token;
+	tmp = *token;
 	next_spe = get_next_special(tmp);
 	next_token = ft_calloc(get_token_size(tmp, next_spe) + 1, \
-			sizeof(*next_token));;
+		sizeof(*next_token));
 	if (next_token == NULL)
 		return (NULL);
 	i = 0;
 	if (*tmp == next_spe)
-		while(*tmp && *tmp == next_spe)
+		while (*tmp && *tmp == next_spe)
 			next_token[i++] = *tmp++;
 	tmp = ft_substr(*token, i, ft_strlen(*token));
 	if (*token == NULL)
@@ -112,17 +111,17 @@ char    *get_next_token(char **token)
 	 the function returns the subtoken string.
 */
 
-char    *get_subtoken(char *token[], int *i)
+char	*get_subtoken(char *token[], int *i)
 {
-	char    *subtoken;
-	int     subtoken_count;
+	char	*subtoken;
+	int		subtoken_count;
 
 	subtoken = NULL;
 	subtoken_count = get_subtoken_count(token, *i);
 	while (token[*i] && subtoken_count)
 	{
 		if (subtoken_count == 1 && ft_strchr(token[*i], ')')
-				&& ft_strlen(ft_strrchr(token[*i], ')')) != 1)
+			&& ft_strlen(ft_strrchr(token[*i], ')')) != 1)
 			return (get_end_subtoken(token, i, subtoken));
 		subtoken = ft_append(&subtoken, " ");
 		if (subtoken == NULL)
@@ -163,11 +162,11 @@ char    *get_subtoken(char *token[], int *i)
 	for token using ft_free_str_array and returns the modified resized array.
 */
 
-char    **resize_token(char **token)
+char	**resize_token(char **token)
 {
-	char    **resized;
-	size_t  resized_size;
-	int     i[2];
+	char	**resized;
+	size_t	resized_size;
+	int		i[2];
 
 	resized_size = 50;
 	resized = ft_calloc(resized_size + 1, sizeof(*resized));
@@ -175,7 +174,7 @@ char    **resize_token(char **token)
 		return (NULL);
 	i[0] = 0;
 	i[1] = 0;
-	while(token[i[0]])
+	while (token[i[0]])
 	{
 		if (token[i[0]][0] == '(')
 			resized[i[1]] = get_subtoken(token, &i[0]);
@@ -186,33 +185,33 @@ char    **resize_token(char **token)
 		if (resized[i[1]++] == NULL)
 			return (free_token(token, resized));
 		if ((size_t)i[1] == resized_size - 1)
-			resized = ft_realloc_str_arr(resized, resized_size += 10);			
+			resized = ft_realloc_str_arr(resized, resized_size += 10);
 	}
 	ft_free_tab(token);
 	return (resized);
 }
 
-int lexer(char  *rline)
-{
-	char    **token;
-	int		exit_status;
-	
-	if (!valid_synthax_str(rline))
-		return (exit_syntax_error());
-	token = ft_split_set(rline, " \t\r\v\f\n");
-	if (join_quote(&token) == EXIT_FAILURE)
-	{
-		ft_free_str_array(&token);
-		return (EXIT_FAILURE);
-	}
-	token = resize_token(token);
-	if (token == NULL)
-		return (EXIT_FAILURE);
-	set_lex_token(token);
-	if (!valid_syntax_token(token))
-		return (exit_syntax_error());
-	exit_status = parser(token);
-	ft_free_tab(token);
-	reset_lex_token();
-	return (exit_status);
-}
+// int	lexer(char *rline)
+// {
+// 	char	**token;
+// 	int		exit_status;
+
+// 	if (!valid_synthax_str(rline))
+// 		return (exit_syntax_error());
+// 	token = ft_split_set(rline, " \t\r\v\f\n");
+// 	if (join_quote(&token) == EXIT_FAILURE)
+// 	{
+// 		ft_free_str_array(&token);
+// 		return (EXIT_FAILURE);
+// 	}
+// 	token = resize_token(token);
+// 	if (token == NULL)
+// 		return (EXIT_FAILURE);
+// 	set_lex_token(token);
+// 	if (!valid_syntax_token(token))
+// 		return (exit_syntax_error());
+// 	exit_status = parser(token);
+// 	ft_free_tab(token);
+// 	reset_lex_token();
+// 	return (exit_status);
+// }

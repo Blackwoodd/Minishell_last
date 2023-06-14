@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:41:35 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/30 16:36:35 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:02:21 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@
 	*Finally, it returns EXIT_SUCCESS to indicate successful token handling.
 */
 
-int	get_token_cmd(char  *token, t_par_tok *par_tok, t_iter *iter)
+int	get_token_cmd(char *token, t_par_tok *par_tok, t_iter *iter)
 {
 	if (token == NULL)
 		return (EXIT_SUCCESS);
 	if (!is_token_quote(token) && (is_spe_token(token)
 			|| is_token_redir(token) || (ft_strchr(token, '(')
-			|| ft_strchr(token, ')'))))
+				|| ft_strchr(token, ')'))))
 		return (EXIT_SUCCESS);
 	if (init_current_pars_token() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -88,7 +88,8 @@ int	get_token_cmd(char  *token, t_par_tok *par_tok, t_iter *iter)
 
 	*The function sets the corresponding redirection type
 	in the current parsing token based on the
-	token's type (get_current_par_tok()->redir_type[get_token_redit_type(lex_token[iter[lex]])] = true).
+	token's type (get_current_par_tok()->redir_type[get_token_redit_type
+	(lex_token[iter[lex]])] = true).
 
 	*The function increments the buffer size by 2 ((*buff_size) += 2)
 	to account for the redirection tokens.
@@ -111,17 +112,17 @@ int	get_token_cmd(char  *token, t_par_tok *par_tok, t_iter *iter)
 	* Finally, it returns EXIT_SUCCESS to indicate successful token handling.
 */
 
-int get_token_redir(char *lex_token[], t_iter *iter)
+int	get_token_redir(char *lex_token[], t_iter *iter)
 {
 	int		i;
 	t_iter	*buff_iter;
 	char	***buff;
 	size_t	*buff_size;
-	
+
 	if (lex_token[iter[lex]] == NULL)
 		return (EXIT_SUCCESS);
 	if (!try_get_token_redir_buff(&buff, &buff_size, &buff_iter))
-		return(EXIT_SUCCESS);
+		return (EXIT_SUCCESS);
 	if (init_current_pars_token() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	get_current_par_token()->redir_type \
@@ -157,7 +158,8 @@ int get_token_redir(char *lex_token[], t_iter *iter)
 	move to the next paragraph.
     
 	*Initializes the current paragraph token using init_current_pars_token().
-	If the initialization fails (EXIT_FAILURE), it returns EXIT_FAILURE to indicate an error.
+	If the initialization fails (EXIT_FAILURE), it returns EXIT_FAILURE to indicate
+	an error.
 
 	*Sets the type of the current paragraph token based on the special token:
     
@@ -167,10 +169,12 @@ int get_token_redir(char *lex_token[], t_iter *iter)
     
 	*Increments the lex iterator (iter[lex]++) to move to the next lex token.
     
-	*Returns EXIT_BREAK to indicate that the current paragraph token handling is complete.
+	*Returns EXIT_BREAK to indicate that the current paragraph token handling
+	is complete.
 
-	*If the token contains an opening parenthesis ((), it calls the get_subshell_token
-	function to handle the subshell token using the current iterator (iter) and returns its result.
+	*If the token contains an opening parenthesis ((), it calls the
+	get_subshell_token function to handle the subshell token using the current
+	iterator (iter) and returns its result.
 
 	*If none of the above conditions are met, it returns EXIT_SUCCESS to
 	indicate that the token handling is complete.
@@ -183,7 +187,7 @@ int	get_special_token(char *token, t_par_tok *par_toks[], t_iter *iter)
 	if (ft_strchr(token, '\'') || ft_strchr(token, '\"'))
 		return (EXIT_SUCCESS);
 	if ((ft_strstr(token, "&&") || ft_strstr(token, "||"))
-			&& ft_strlen(token) == 2)
+		&& ft_strlen(token) == 2)
 	{
 		iter[par]++;
 		if (init_current_pars_token() == EXIT_FAILURE)
@@ -196,7 +200,7 @@ int	get_special_token(char *token, t_par_tok *par_toks[], t_iter *iter)
 		return (EXIT_BREAK);
 	}
 	if (ft_strchr(token, '('))
-		return(get_subshell_token(iter));
+		return (get_subshell_token(iter));
 	return (EXIT_SUCCESS);
 }
 
@@ -207,34 +211,43 @@ int	get_special_token(char *token, t_par_tok *par_toks[], t_iter *iter)
 	*The function first checks if the token is NULL. If so, it returns EXIT_SUCCESS
 	to indicate that the token handling is complete.
     
-	*Next, it initializes the current paragraph token using init_current_pars_token().
-	If the initialization fails (EXIT_FAILURE), it returns EXIT_FAILURE to indicate an error.
+	*Next, it initializes the current paragraph token using
+	init_current_pars_token().
+	If the initialization fails (EXIT_FAILURE), it returns
+	EXIT_FAILURE to indicate an error.
     
-	*The function retrieves a pointer to the current paragraph token (par_tok)
-	for easier access to its attributes.
+	*The function retrieves a pointer to the current paragraph token
+	(par_tok) for easier access to its attributes.
     
-	*If the token has a length of 1, the function checks the following conditions:
+	*If the token has a length of 1, the function checks the following
+	conditions:
         
 		-If the token contains a pipe symbol (|), it calls the set_tok_type_pipe
-		function to set the token type as a pipe and updates the iterators accordingly.
+		function to set the token type as a pipe and updates the iterators
+		accordingly.
         
 		-If the token contains a less-than symbol (<),
-		it sets the is_in flag of the paragraph token's redir_type attribute to true.
+		it sets the is_in flag of the paragraph token's redir_type attribute
+		to true.
         
 		-If the token contains a greater-than symbol (>),
-		it sets the is_out flag of the paragraph token's redir_type attribute to true.
+		it sets the is_out flag of the paragraph token's redir_type attribute
+		to true.
     
 	*If the token has a length of 2 and contains the substring "<<",
-	it sets the is_in_heredoc flag of the paragraph token's redir_type attribute to true.
+	it sets the is_in_heredoc flag of the paragraph token's redir_type attribute
+	to true.
     
 	*If the token has a length of 2 and contains the substring ">>",
-	it sets the is_out_append flag of the paragraph token's redir_type attribute to true.
+	it sets the is_out_append flag of the paragraph token's redir_type attribute
+	to true.
     
 	*Finally, if the token does not start with a single quote or 
 	double quote and contains both an opening parenthesis and a closing parenthesis,
 	it sets the type of the paragraph token to "subshell".
     
-	*The function returns EXIT_SUCCESS to indicate that the token type handling is complete.
+	*The function returns EXIT_SUCCESS to indicate that the token type handling
+	is complete.
 */
 
 int	get_token_type(char *token, t_iter *iter)
@@ -260,7 +273,7 @@ int	get_token_type(char *token, t_iter *iter)
 	if (ft_strlen(token) == 2 && ft_strstr(token, ">>"))
 		par_tok->redir_type[is_out_append] = true;
 	if ((token[0] != '\'' && token[0] != '\"')
-			&& (ft_strchr(token, '(') && ft_strchr(token, ')')))
+		&& (ft_strchr(token, '(') && ft_strchr(token, ')')))
 		par_tok->type = subshell;
 	return (EXIT_SUCCESS);
 }

@@ -43,7 +43,7 @@ $(NAME)	:	$(OBJS)
 
 clean	:
 			@echo "\033[0;33mClean...\033[0m"
-			@$(RM) -rf $(PATH_OBJS)
+			$(RM) -rf $(PATH_OBJS)
 			make clean -C $(LIBFT_PATH)
 			@echo "\033[0;32mClean : OK.\033[0m"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_synthax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:04:32 by nsalhi            #+#    #+#             */
-/*   Updated: 2023/05/28 18:22:08 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:34:35 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	count_elem_char(char *rline, char c)
 		if (rline[i] == '\'')
 			while (rline[++i] && rline[i] != '\'')
 				;
-		if  (rline[i] == '\"')
+		if (rline[i] == '\"')
 			while (rline[++i] && rline[i] != '\"')
 				;
 		if (rline[i] == c)
@@ -120,7 +120,7 @@ int	count_elem_char(char *rline, char c)
 	and the function returns true.
 */
 
-bool is_correct_sub(char *rline, int i)
+bool	is_correct_sub(char *rline, int i)
 {
 	while (i > 0 && rline[i] && ft_isspace(rline[i]))
 		i--;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 11:20:01 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/07 11:39:58 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:07:28 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 	indicating that it is not part of a pipe.
 */
 
-int init(t_exp_tok **exp_tok)
+int	init(t_exp_tok **exp_tok)
 {
 	*exp_tok = malloc(sizeof(**exp_tok));
 	if (*exp_tok == NULL)
@@ -56,15 +56,16 @@ int init(t_exp_tok **exp_tok)
 	it encounters a NULL element, indicating the end of the array.
 
 	*Inside the loop, it increments the size variable by 1 for
-	each element encountered, effectively counting the number of tokens in the array.
+	each element encountered, effectively counting the number of
+	tokens in the array.
 
 	*Once the loop finishes, it returns the final value of size,
 	representing the size of the array.
 */
 
-size_t get_tok_size(t_par_tok *par_toks[])
+size_t	get_tok_size(t_par_tok *par_toks[])
 {
-	size_t size;
+	size_t	size;
 
 	size = 0;
 	while (par_toks[size])
@@ -102,9 +103,9 @@ size_t get_tok_size(t_par_tok *par_toks[])
 	*Finally, it returns the exit_status provided as the function result.
 */
 
-int free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
+int	free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (exp_toks[i])
@@ -161,10 +162,10 @@ int free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 	successful conversion of tokens.
 */
 
-int get_tokens(t_par_tok *par_toks[])
+int	get_tokens(t_par_tok *par_toks[])
 {
-	t_exp_tok **exp_toks;
-	int i;
+	t_exp_tok	**exp_toks;
+	int			i;
 
 	exp_toks = ft_calloc(get_tok_size(par_toks) + 1, sizeof(*exp_toks));
 	if (exp_toks == NULL)
@@ -226,10 +227,10 @@ int get_tokens(t_par_tok *par_toks[])
 	to indicate a successful reinterpretation of environment variables.
 */
 
-int reinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
+int	reinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (par_toks[i] && exp_toks[i] && par_toks[i]->type == std)

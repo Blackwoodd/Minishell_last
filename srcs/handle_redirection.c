@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:56:51 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/08 12:31:26 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:40:23 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 	*The function open_in takes two parameters: par_token, a pointer to a
 	structure t_par_tok containing tokenized command information, and exp_tok
-	 a pointer to a structure t_exp_tok containing command execution information.
+	a pointer to a structure t_exp_tok containing command execution information.
     
 	*It declares several variables, including i for iteration, fd for
 	file descriptor, and heredeoc_fd to store the file descriptor
@@ -106,7 +106,8 @@ static int	open_in(t_par_tok *par_token, t_exp_tok *exp_tok)
 	flags O_RDWR | O_CREAT | O_TRUNC and file permissions 0644.
     
 	*If it is an append output redirection token, it opens the file specified
-	by the next token using open with flags O_RDWR | O_CREAT | O_APPEND and file permissions 0644.
+	by the next token using open with flags O_RDWR | O_CREAT | O_APPEND and file
+	permissions 0644.
     
 	*If the file fails to open (fd == -1), it returns an appropriate
 	error status using ft_perror and EXIT_FAILURE.
@@ -128,7 +129,8 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 
 	i = 0;
 	fd = 1;
-	while (par_token->redir_type[is_out] || par_token->redir_type[is_out_append])
+	while (par_token->redir_type[is_out]
+		|| par_token->redir_type[is_out_append])
 	{
 		if (par_token->redir_type[is_out]
 			&& ft_strcmp(par_token->out[i++], ">") == 0)
@@ -153,7 +155,8 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 	as well as handling of pipes, for a given par_tok (parse token)
 	and exp_tok (execution token).
 
-	*It declares an exit_status variable to store the exit status of the executed command.
+	*It declares an exit_status variable to store the exit status of
+	the executed command.
     
 	*It calls the open_in function to handle input redirection by
 	passing par_tok and exp_tok as arguments.
@@ -172,7 +175,8 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
     
 	*It checks the value of par_tok->redir_type[is_pipe].
 	If it is true, it sets exp_tok->is_pipe to true, indicating
-	that the command is part of a pipe. Otherwise, it sets exp_tok->is_pipe to false.
+	that the command is part of a pipe. Otherwise, it sets
+	exp_tok->is_pipe to false.
     
 	*If the type of par_tok is subshell, it calls the execute_subshell function
 	to execute the subshell command contained in exp_tok.
@@ -196,7 +200,7 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type)
 {
 	int	exit_status;
-	
+
 	if (open_in(par_tok, exp_tok) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (open_out(par_tok, exp_tok) == EXIT_FAILURE)

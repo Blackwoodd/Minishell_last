@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/13 17:33:30 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:44:41 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	find_quote_pos(char *str)
 	* Finally, the function returns the initialized quote structure.
 */
 
-t_quote *init_quote(char ***token, int i)
+t_quote	*init_quote(char ***token, int i)
 {
 	t_quote	*quote;
 
@@ -122,7 +122,8 @@ int	end_join(t_quote *quote, int e_status)
 }
 
 /*
-	The functionis responsible for joining tokens in the token array based on quotes.
+	The functionis responsible for joining tokens in the token array
+	based on quotes.
 
 	* The function calls the init_quote function to initialize a t_quote structure 
 	based on the provided token array and position i. 
@@ -143,8 +144,8 @@ int	end_join(t_quote *quote, int e_status)
 	the function calls end_join to free the memory and returns EXIT_FAILURE.
 
 	* If the token at the position quote->i in the token array is NULL, 
-	indicating that all tokens within the quote range have been successfully joined, 
-	the function calls end_join to free the memory and returns EXIT_SUCCESS.
+	indicating that all tokens within the quote range have been successfully
+	joined, the function calls end_join to free the memory and returns EXIT_SUCCESS.
 
 	* If the token_join_end_one function fails to join the end of the last token 
 	within the quote range, the function calls end_join 
@@ -154,10 +155,10 @@ int	end_join(t_quote *quote, int e_status)
 	the function calls end_join to free the memory and returns EXIT_SUCCESS.
 */
 
-int join_token(char ***token, int i)
+int	join_token(char ***token, int i)
 {
-	t_quote *quote;
-	int     verif;
+	t_quote	*quote;
+	int		verif;
 
 	quote = init_quote(token, i);
 	if (quote == NULL)
@@ -175,7 +176,8 @@ int join_token(char ***token, int i)
 }
 
 /*
-	The function is responsible for joining tokens within quotes in the token array.
+	The function is responsible for joining tokens within quotes
+	in the token array.
 	
 	* The function initializes a variable i to 0 to keep 
 	track of the current position in the token array.
@@ -183,27 +185,29 @@ int join_token(char ***token, int i)
 	* t checks if the token array is NULL. If so, it returns EXIT_FAILURE 
 	indicating a failure.
 
-	* The function enters a loop that iterates through each element in the token array.
+	* The function enters a loop that iterates through each element in the token
+	array.
 	
 	* Within the loop, it checks if the current token at position i exists 
 	and contains single or double quotes (' or "). 
-	If so, it calls the join_token function to join the tokens within the quote range.
+	If so, it calls the join_token function to join the tokens within the quote
+	range.
 	If the join_token function returns EXIT_FAILURE, indicating a failure,
 	the function returns EXIT_FAILURE. Otherwise, it performs the following checks:
 		- If the current token at position i no longer contains any quotes (' or "),
 		it increments i by 2.
 		- Otherwise, if the current token still contains quotes, it increments i by 1.
 		
-	* If the current token does not contain any quotes, the function simply increments i by 1 
-	and continues to the next token.
+	* If the current token does not contain any quotes, the function simply
+	increments i by 1 and continues to the next token.
 
 	* Once all tokens have been processed, the function returns EXIT_SUCCESS 
 	to indicate successful execution.
 */
 
-int join_quote(char ***token)
+int	join_quote(char ***token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*token == NULL)

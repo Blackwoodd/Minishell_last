@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_jquote_bis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:13:34 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/28 16:39:09 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:15:44 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 	s a successful combination of tokens.
 */
 
-int combine_loop(char ***token, t_quote *quote)
+int	combine_loop(char ***token, t_quote *quote)
 {
 	while (*token && (*token)[quote->i]
 			&& ft_setinstr((*token)[quote->i], quote->quote) == false)
@@ -76,7 +76,7 @@ int	token_join_end_one(char ***token, t_quote *quote)
 		ft_free_str(&(*token)[quote->i]);
 		(*token)[quote->i] = ft_strdup(quote->end + quote->len);
 		if ((*token)[quote->i] == NULL)
-			return	(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }

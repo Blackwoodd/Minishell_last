@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:24:37 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/01 18:44:34 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:19:26 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
 /*
 	The function searches for the <<" element in par_tok->in and returns
-	the corresponding heredoc content. If it doesn't find the <<" element, it returns NULL.
+	the corresponding heredoc content. If it doesn't find the <<" element,
+	it returns NULL.
 */
+
 static char	*get_heredoc(t_par_tok *par_tok)
 {
 	int	i;
@@ -44,7 +45,8 @@ static int	exit_close_fds(int fd1, int fd2, int exit_status)
 	The function wait_for_heredoc_help is a helper function that takes
 	a t_exp_tok pointer exp_tok as input.
 
-	* It checks if exp_tok->cmd is NULL and exp_tok->out is not equal to STDOUT_FILENO.
+	* It checks if exp_tok->cmd is NULL and exp_tok->out is not
+	equal to STDOUT_FILENO.
 	
 	* If the conditions are met, it closes the file descriptor exp_tok->out.
 	

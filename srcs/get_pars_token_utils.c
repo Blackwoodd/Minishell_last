@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_pars_token_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:36:02 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/30 16:16:19 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:06:41 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	The function is responsible to set Sets current and next token type to pipe
 */
 
-int set_tok_type_pipe(t_par_tok *pars_token, t_iter *iter)
+int	set_tok_type_pipe(t_par_tok *pars_token, t_iter *iter)
 {
 	pars_token->redir_type[is_pipe] = true;
 	iter[lex]++;
@@ -32,7 +32,8 @@ int set_tok_type_pipe(t_par_tok *pars_token, t_iter *iter)
 
 	* The function takes a parameter iter, which is a pointer to the iterator array.
     
-	* It first calls the function init_current_pars_token to initialize the current parser token.
+	* It first calls the function init_current_pars_token to initialize the
+	current parser token.
 	If the initialization fails (EXIT_FAILURE), the function returns EXIT_FAILURE.
     
 	* It then retrieves the current lexical token array using get_current_lex_token
@@ -64,11 +65,11 @@ int set_tok_type_pipe(t_par_tok *pars_token, t_iter *iter)
 	successful parsing of the subshell token.
 */
 
-int get_subshell_token(t_iter *iter)
+int	get_subshell_token(t_iter *iter)
 {
-	char        *lex_token;
-	t_par_tok   *par_tok;
-	
+	char		*lex_token;
+	t_par_tok	*par_tok;
+
 	if (init_current_pars_token() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	lex_token = get_current_lex_token();
@@ -90,7 +91,7 @@ int get_subshell_token(t_iter *iter)
 	The function checks whether a given token contains single or double quotes.
 */
 
-bool    is_token_quote(char *token)
+bool	is_token_quote(char *token)
 {
 	if (ft_strchr(token, '\'') || ft_strchr(token, '\"'))
 		return (true);
@@ -101,7 +102,7 @@ bool    is_token_quote(char *token)
 	The function checks whether a given token represents a redirection operator.
 */
 
-bool    is_token_redir(char *token)
+bool	is_token_redir(char *token)
 {
 	if (ft_strlen(token) == 2)
 	{
@@ -122,7 +123,7 @@ bool    is_token_redir(char *token)
 	The function checks whether a given token represents a special operator. 
 */
 
-bool    is_spe_token(char *token)
+bool	is_spe_token(char *token)
 {
 	if (ft_strlen(token) == 2)
 	{
@@ -131,4 +132,3 @@ bool    is_spe_token(char *token)
 	}
 	return (false);
 }
-

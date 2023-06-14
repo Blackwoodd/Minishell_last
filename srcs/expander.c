@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:01:00 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/08 12:49:23 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:18:41 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,11 @@ static bool	is_redir(t_par_tok *par_tok)
 
 	*After processing each token, it increments i to move to the next token.
 
-	*Finally, it returns EXIT_SUCCESS to indicate the successful execution of the function.
+	*Finally, it returns EXIT_SUCCESS to indicate the successful execution of
+	the function.
 */
 
-static int process_express_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
+static int	process_express_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 {
 	int	i;
 
@@ -156,10 +157,10 @@ static int process_express_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 int	expander(t_par_tok *pars_token[])
 {
 	t_exp_tok	**exp_tok;
-	
+
 	if (get_tokens(pars_token) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_tok = get_exp_toks();
-	return (free_exp_toks(exp_tok, process_express_tokens(exp_tok, pars_token)));
+	return (free_exp_toks(exp_tok,
+			process_express_tokens(exp_tok, pars_token)));
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token_synthax.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 09:50:37 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/28 15:18:43 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:16:35 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,26 @@ bool	is_redirection(char *token)
 	a valid parentheses pair.
 
 	If the length of the token is not equal to 2:
-     * If the token contains any of the following combinations: "&&", "||", "<<", or ">>",
-	the function returns false. This indicates that the token represents an invalid 
-	combination of special characters.
+     * If the token contains any of the following combinations: "&&",
+		"||", "<<", or ">>",
+	the function returns false. This indicates that the token represents an
+	invalid combination of special characters.
      * If the token contains the character '&', the function returns false.
-	  This indicates that the token represents an invalid occurrence of the '&' character.
-	  
+		This indicates that the token represents an invalid occurrence of the '&'
+		character.
+		
 	If the length of the token is not equal to 1:
-     * If the token contains the character '<', but does not contain the combination "<<",
-	  the function returns false. This indicates that the token represents an invalid occurrence
-	   of the '<' character.
-     * If the token contains the character '>', but does not contain the combination ">>",
-	  the function returns false. This indicates that the token represents 
-	  an invalid occurrence of the '>' character.
-     * If the token contains the character '|', but does not contain the combination "||",
-	  the function returns false. This indicates that the token represents
-	   an invalid occurrence of the '|' character.
+     * If the token contains the character '<', but does not contain the
+		combination "<<", the function returns false. This indicates that the
+		token represents an invalid occurrence of the '<' character.
+     * If the token contains the character '>', but does not contain the
+		combination ">>", the function returns false.
+		This indicates that the token represents an invalid occurrence of the
+		'>' character.
+     * If the token contains the character '|', but does not contain the
+		combination "||", the function returns false.
+		This indicates that the token represents an invalid occurrence of
+		the '|' character.
 */
 
 bool	is_correct_spe(char	*token)
@@ -81,7 +85,7 @@ bool	is_correct_spe(char	*token)
 	if (ft_strlen(token) != 2)
 	{
 		if (ft_strstr(token, "&&") || ft_strstr(token, "||")
-				|| ft_strstr(token, "<<") || ft_strstr(token, ">>"))
+			|| ft_strstr(token, "<<") || ft_strstr(token, ">>"))
 			return (false);
 		if (ft_strchr(token, '&'))
 			return (false);
@@ -89,8 +93,8 @@ bool	is_correct_spe(char	*token)
 	if (ft_strlen(token) != 1)
 	{
 		if ((ft_strchr(token, '<') && !ft_strstr(token, "<<"))
-				|| (ft_strchr(token, '>') && !ft_strstr(token, ">>"))
-				|| (ft_strchr(token, '|') && !ft_strstr(token, "||")))
+			|| (ft_strchr(token, '>') && !ft_strstr(token, ">>"))
+			|| (ft_strchr(token, '|') && !ft_strstr(token, "||")))
 			return (false);
 	}
 	return (true);
@@ -101,8 +105,8 @@ bool	is_correct_spe(char	*token)
 	the combination of two tokens represents a correct or 
 	valid usage of '|' .
 
-	If the length of the current token is equal to 1 and it contains the '|' character,
-	the function proceeds to further checks.
+	If the length of the current token is equal to 1 and it contains the
+	'|' character, the function proceeds to further checks.
      * If the next token is NULL, indicating there is no subsequent token, 
 	 the function returns false. This indicates an invalid occurrence 
 	 of the '|' character without any command to pipe the output to.
@@ -141,8 +145,8 @@ bool	is_special(char *token, int type)
 	if (ft_strlen(token) == 1 && type == 0)
 	{
 		if ((ft_strchr(token, '<') && !ft_strstr(token, "<<"))
-				|| (ft_strchr(token, '>') && !ft_strstr(token, ">>"))
-				|| (ft_strchr(token, '|') && !ft_strstr(token, "||")))
+			|| (ft_strchr(token, '>') && !ft_strstr(token, ">>"))
+			|| (ft_strchr(token, '|') && !ft_strstr(token, "||")))
 			return (true);
 	}
 	if (ft_strlen(token) == 2 && type == 0)
@@ -152,7 +156,7 @@ bool	is_special(char *token, int type)
 	}
 	if (ft_strlen(token) == 2 && type == 3)
 	{
-		if (ft_strstr(token, "&&") ||ft_strstr(token, "||"))
+		if (ft_strstr(token, "&&") || ft_strstr(token, "||"))
 			return (true);
 	}
 	return (false);
@@ -163,25 +167,25 @@ bool	is_special(char *token, int type)
 	
 	For each token, it performs the following checks:
 	 * If the token fails the verif_is_token check,
-	 it proceeds with further checks.
+		it proceeds with further checks.
 	 * If the token is the first token (i == 0) or the next token is NULL,
-	 and the token is either "&&" or contains "||", the function returns false.
-	 This indicates an invalid occurrence of the logical operators.
+		and the token is either "&&" or contains "||", the function returns false.
+		This indicates an invalid occurrence of the logical operators.
 	 * If the next token is NULL and the token is a redirection
-	 (checked using the is_redirection function), the function returns false.
-	 This indicates an invalid occurrence of a redirection without 
-	 a corresponding command.
+		(checked using the is_redirection function), the function returns false.
+		This indicates an invalid occurrence of a redirection without 
+		a corresponding command.
 	 * If the token fails the is_correct_spe check 
-	 (checks if it's a valid special character), the function returns false.
+		(checks if it's a valid special character), the function returns false.
 	 * If the combination of the current token and the next token fails 
-	  the is_correct_pipe check (checks the validity of the pipe character usage), 
-	  the function returns false.
-	 * If the token contains both '(' and ')', and it is not the first token (i != 0)
-	  and the preceding token (token[i - 1]) is a special character, 
-	  the function returns false. This indicates an invalid occurrence 
-	  of parentheses after a special character.
+		the is_correct_pipe check (checks the validity of the pipe character usage), 
+		the function returns false.
+	 * If the token contains both '(' and ')', and it is not the first token
+		(i != 0) and the preceding token (token[i - 1]) is a special character, 
+		the function returns false. This indicates an invalid occurrence 
+		of parentheses after a special character.
 	 * If all the tokens pass the checks, the function returns true,
-	  indicating that the syntax of the token sequence is valid.
+		indicating that the syntax of the token sequence is valid.
 */
 
 bool	valid_syntax_token(char	*token[])
@@ -189,15 +193,15 @@ bool	valid_syntax_token(char	*token[])
 	int	i;
 
 	i = 0;
-	while(token[i])
+	while (token[i])
 	{
 		if (!verif_is_token(token[i]))
 		{
 			if (i == 0 || get_lexic_token()[i + 1] == NULL)
 				if ((ft_strlen(token[i]) == 2 && ft_strstr(token[i], "&&"))
-						|| ft_strstr(token[i], "||"))
+					|| ft_strstr(token[i], "||"))
 					return (false);
-			if (get_lexic_token()[i+1] == NULL)
+			if (get_lexic_token()[i + 1] == NULL)
 				if (is_redirection(token[i]))
 					return (false);
 			if (!is_correct_spe(token[i]))

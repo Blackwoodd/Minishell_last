@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interprete_env_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:56:51 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/30 17:09:01 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:39:11 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,20 +113,21 @@ char	*get_var(char *lex_tok)
 }
 
 /*
-	The functionnterprets environment variables within a given string lex_token.
+	The functionnterprets environment variables within a given string
+	lex_token.
 
 	* It assigns the value of lex_token to result_token initially.
 
 	*If the first character of lex_token is not a single quote ('),
-	and the length of lex_token is greater than 1, and there is a '$' character
-	present in lex_token, it enters the conditional block.
+	and the length of lex_token is greater than 1, and there is a '$'
+	character present in lex_token, it enters the conditional block.
 
-    	- Inside the conditional block, it checks if lex_token contains "&?" characters
-		using ft_strchr.
+		- Inside the conditional block, it checks if lex_token contains
+			"&?" characters using ft_strchr.
     
-			- If "&?" characters are found, it frees the memory allocated for lex_token
-			and returns the string representation of the error code using
-			ft_itoa and get_err_code().
+		- If "&?" characters are found, it frees the memory
+			allocated for lex_token and returns the string representation
+			of the error code using ft_itoa and get_err_code().
     
 		- Otherwise, it assigns the result of get_env_var_variable(lex_token,
 		get_var(lex_token)) to result_token. get_env_var_variable is
@@ -134,12 +135,12 @@ char	*get_var(char *lex_tok)
 		and replaces it in the lex_token string.
 		It also frees the memory allocated for lex_token.
 	
-	* If lex_token does not contain any single quotes or double quotes, and it is equal to "*",
-	it enters the conditional block.
+	* If lex_token does not contain any single quotes or double quotes, and it
+		is equal to "*", it enters the conditional block.
 
-    	- Inside the conditional block, it frees the memory allocated for
-		lex_token and returns the directory items using the function get_directory_items().
-		This function retrieves the items within the
+		- Inside the conditional block, it frees the memory allocated for
+		lex_token and returns the directory items using the function
+		get_directory_items(). This function retrieves the items within the
 		current directory and returns them as a string.
 
 	* If none of the above conditions are met, it simply returns the result_token.
@@ -148,10 +149,10 @@ char	*get_var(char *lex_tok)
 char	*interpret_env_var(char *lex_token)
 {
 	char	*result_token;
-	
+
 	result_token = lex_token;
 	if (lex_token[0] != '\'' && ft_strlen(lex_token) > 1
-			&& ft_strchr(lex_token, '$'))
+		&& ft_strchr(lex_token, '$'))
 	{
 		if (ft_strstr(lex_token, "&?"))
 		{
@@ -163,7 +164,7 @@ char	*interpret_env_var(char *lex_token)
 		return (result_token);
 	}
 	if (!ft_strchr(lex_token, '\'') && !ft_strchr(lex_token, '\"')
-			&& ft_strcmp(lex_token, "*\0") == 0)
+		&& ft_strcmp(lex_token, "*\0") == 0)
 	{
 		free(lex_token);
 		return (get_directory_items());

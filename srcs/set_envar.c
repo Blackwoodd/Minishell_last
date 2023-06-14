@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_envar.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:18:45 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/07 19:04:58 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:39:32 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 static t_env	*get_env_v(t_env	*envar)
 {
 	static t_env	*static_envar = NULL;
-	
+
 	if (envar == NULL)
 		return (static_envar);
 	static_envar = envar;
@@ -44,7 +44,7 @@ static t_env	*get_env_v(t_env	*envar)
 
 void	set_envar(t_env *envar)
 {
-		get_env_v(envar);
+	get_env_v(envar);
 }
 
 t_env	*get_envar(void)
@@ -61,7 +61,7 @@ t_env	*get_envar(void)
 char	**get_env_var(void)
 {
 	t_env	*envar;
-	
+
 	envar = get_envar();
 	if (envar == NULL)
 		return (NULL);

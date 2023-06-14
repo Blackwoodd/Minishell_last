@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:14:50 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/08 14:44:22 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:46:38 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 	The function is used to manage a static variable static_envp that holds
 	the environment variables.
 */
+//if ERROR DERNIER CHANGEMENT ==> static char	**static_envp = NULL;
 
 static char	**core_get_envp(char **envp, bool reset)
 {
-    static char	**static_envp = NULL;
-	
+	static char	**static_envp;
+
+	static_envp = NULL;
 	if (envp == NULL && !reset)
 		return (static_envp);
 	if (reset)

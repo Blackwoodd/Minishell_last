@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:39:21 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/08 14:06:47 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:53:52 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 int	get_pars_tok(char *lex_tok[], t_par_tok *pars_tok[], t_iter *iter)
 {
 	int	tmp;
-	
+
 	tmp = EXIT_SUCCESS;
 	tmp = get_token_type(lex_tok[iter[lex]], iter);
 	if (tmp != EXIT_SUCCESS)
@@ -141,39 +141,40 @@ static int	get_token(char *lexer_token[])
 }
 */
 
-int get_token(char *lexer_token[])
+int	get_token(char *lexer_token[])
 {
-    t_par_tok **pars_token;
-    t_iter *iter;
-    int get_pars_tok_exit_status;
+	t_par_tok	**pars_token;
+	t_iter		*iter;
+	int			get_pars_tok_exit_status;
 
-    iter = ft_calloc(NB_ITER + 1, sizeof(*iter));
-    if (iter == NULL)
-        return EXIT_FAILURE;
-    set_iter(iter);
-    pars_token = ft_calloc(get_stoken_size(lexer_token) + 1, sizeof(*pars_token));
-    if (pars_token == NULL)
-    {
-        free(iter);
-        return EXIT_FAILURE;
-    }
-    set_pars_token(pars_token);
-    while (lexer_token[iter[lex]])
-    {
-        get_pars_tok_exit_status = get_pars_tok(lexer_token, pars_token, iter);
-        if (get_pars_tok_exit_status == EXIT_FAILURE)
-        {
-            free_parser(pars_token, iter, EXIT_FAILURE);
-            return EXIT_FAILURE;
-        }
-        else if (get_pars_tok_exit_status == EXIT_SYNTAX_ERROR)
-        {
-            free_parser(pars_token, iter, EXIT_SYNTAX_ERROR);
-            return EXIT_SYNTAX_ERROR;
-        }
-    }
-    free(iter);
-    return EXIT_SUCCESS;
+	iter = ft_calloc(NB_ITER + 1, sizeof(*iter));
+	if (iter == NULL)
+		return (EXIT_FAILURE);
+	set_iter(iter);
+	pars_token = ft_calloc(get_stoken_size(lexer_token) + 1,
+			sizeof(*pars_token));
+	if (pars_token == NULL)
+	{
+		free(iter);
+		return (EXIT_FAILURE);
+	}
+	set_pars_token(pars_token);
+	while (lexer_token[iter[lex]])
+	{
+		get_pars_tok_exit_status = get_pars_tok(lexer_token, pars_token, iter);
+		if (get_pars_tok_exit_status == EXIT_FAILURE)
+		{
+			free_parser(pars_token, iter, EXIT_FAILURE);
+			return (EXIT_FAILURE);
+		}
+		else if (get_pars_tok_exit_status == EXIT_SYNTAX_ERROR)
+		{
+			free_parser(pars_token, iter, EXIT_SYNTAX_ERROR);
+			return (EXIT_SYNTAX_ERROR);
+		}
+	}
+	free(iter);
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -205,7 +206,7 @@ int get_token(char *lexer_token[])
 char	**expand_env_var(char *lex_token[])
 {
 	int	i;
-	
+
 	i = 0;
 	while (lex_token[i])
 	{
@@ -213,7 +214,7 @@ char	**expand_env_var(char *lex_token[])
 		if (lex_token[i] == NULL)
 			return (NULL);
 		if (ft_strstr(lex_token[i], "&&") || ft_strstr(lex_token[i], "|"))
-			break;
+			break ;
 		i++;
 	}
 	return (lex_token);
@@ -245,8 +246,7 @@ char	**expand_env_var(char *lex_token[])
 	get_current_par_token function and assigns them to the token variable.
 */
 
-
-int parser(char *lexer_token[])
+int	parser(char *lexer_token[])
 {
 	t_par_tok	**token;
 	int			exit_code;
@@ -261,7 +261,7 @@ int parser(char *lexer_token[])
 	if (exit_code == EXIT_SYNTAX_ERROR)
 		return (EXIT_SYNTAX_ERROR);
 	token = get_pars_token();
-	return(free_pars_token(token, expander(token)));
+	return (free_pars_token(token, expander(token)));
 }
 
 /*
@@ -299,12 +299,12 @@ int main(int argc, char *argv[], char **envp) {
 
 int main()
 {
-    char *tokens[] = {"ls", "cat", "/dev/stdin", NULL};  // Predefined array of tokens
+    char *tokens[] = {"ls", "cat", "/dev/stdin", NULL};
+	// Predefined array of tokens
     int result_tokens;
 
     result_tokens = parser(tokens);
 
-   
 	if (result_tokens == 1)
 		printf("1\n");
     return 0;

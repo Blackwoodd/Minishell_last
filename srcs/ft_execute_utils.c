@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:30:43 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/07 13:30:45 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:32:44 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int handle_builtin_redirection(t_exp_tok *exp_tok)
+int	handle_builtin_redirection(t_exp_tok *exp_tok)
 {
 	int	exit_status;
 	int	pipes_save[2];
 
 	if (exp_tok->in != STDIN_FILENO)
 	{
-		pipes_save[STDIN_FILENO]	= dup(STDIN_FILENO);
+		pipes_save[STDIN_FILENO] = dup(STDIN_FILENO);
 		if (pipes_save[STDIN_FILENO] == -1)
-			return(ft_perror(EXIT_FAILURE, "Pipe error"));
+			return (ft_perror(EXIT_FAILURE, "Pipe error"));
 		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
 			return (ft_perror(EXIT_FAILURE, "Pipe_Error"));
 	}

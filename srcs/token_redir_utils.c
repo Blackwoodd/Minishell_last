@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_redir_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:58:20 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/31 10:32:54 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:17:59 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_token_redir_type(char *token)
 	if (ft_strlen(token) == 1)
 	{
 		if (ft_strchr(token, '>'))
-			return(is_out);
+			return (is_out);
 		if (ft_strchr(token, '<'))
 			return (is_in);
 		if (ft_strchr(token, '|'))
@@ -67,19 +67,21 @@ int	get_token_redir_type(char *token)
 		of the output buffer (get_curr_par_token()->out),
 		the address of the output buffer size (get_curr_par_token()->out_size),
 		and the address of the output buffer iterator (&get_iter()->out) to
-		the corresponding variables passed as parameters (buff, buff_size, buff_iter).
-    	-It returns true to indicate that the retrieval was successful.
+		the corresponding variables passed as parameters (buff, buff_size,
+		buff_iter).
+		-It returns true to indicate that the retrieval was successful.
     
 	* If the above condition is not true, it checks if the current lex token
 	contains either '<'or '<<' and has a length of 1 or 2, respectively.
-	If this condition is met, it assumes that the token represents an input redirection.
-    	
+	If this condition is met, it assumes that the token represents an input
+	redirection.
+		
 		- If the input redirection condition is true, it assigns
 		the address of the input buffer (get_curr_par_token()->in),
 		the address of the input buffer size (get_curr_par_token()->in_size),
 		and the address of the input buffer iterator (&get_iter()->in) to
 		the corresponding variables passed as parameters (buff, buff_size, buff_iter).
-    	- It returns true to indicate that the retrieval was successful.
+		- It returns true to indicate that the retrieval was successful.
     
 	* If none of the above conditions are met, it returns false to
 	indicate that the token does not represent a valid redirection operator.
@@ -90,7 +92,7 @@ bool	try_get_token_redir_buff(char ****buff, size_t **buff_size,
 {
 	if ((ft_strchr(get_current_lex_token(), '>')
 			&&ft_strlen(get_current_lex_token()) == 1)
-			|| (ft_strstr(get_current_lex_token(), ">>")
+		|| (ft_strstr(get_current_lex_token(), ">>")
 			&& ft_strlen(get_current_lex_token()) == 2))
 	{
 		*buff = &get_current_par_token()->out;
@@ -100,7 +102,7 @@ bool	try_get_token_redir_buff(char ****buff, size_t **buff_size,
 	}	
 	else if ((ft_strchr(get_current_lex_token(), '<')
 			&& ft_strlen(get_current_lex_token()) == 1)
-			|| (ft_strstr(get_current_lex_token(), "<<")
+		|| (ft_strstr(get_current_lex_token(), "<<")
 			&& ft_strlen(get_current_lex_token()) == 2))
 	{
 		*buff = &get_current_par_token()->in;

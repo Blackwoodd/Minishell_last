@@ -6,12 +6,11 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:28:39 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 14:28:54 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:14:51 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 /*
 	The function is responsible for executing a child process with the
@@ -103,16 +102,17 @@ int	execute_builtin(t_exp_tok *exp_tok)
 }
 
 /*
-	The function is responsible for executing a built-in command in a child process.
+	The function is responsible for executing a built-in command in a child
+	process.
 
-	*It takes a single parameter, exp_tok, which represents the expanded token structure
-	containing information about the built-in command to be executed.
+	*It takes a single parameter, exp_tok, which represents the expanded token
+	structure containing information about the built-in command to be executed.
     
 	*It declares two variables: pid to store the process ID of the child process and
 	exit_status to store the exit status of the child process.
     
-	*It calls fork to create a new process. If fork returns -1, it means an error occurred,
-	so it returns EXIT_FAILURE.
+	*It calls fork to create a new process. If fork returns -1, it means an error
+	occurred, so it returns EXIT_FAILURE.
     
 	*If fork returns 0, it means the current process is the child process.
         
@@ -123,15 +123,15 @@ int	execute_builtin(t_exp_tok *exp_tok)
         
 		-The child process then calls exit with the exit_status to terminate itself.
         
-		-Note that the return (exit_status); line after exit is never reached since the process
-		exits beforehand.
+		-Note that the return (exit_status); line after exit is never
+		reached since the process exits beforehand.
     
 	*If the current process is the parent process (the process ID is not 0),
 	it waits for the child process to finish using waitpid.
 	The exit status of the child process is stored in exit_status.
     
-	*Finally, the parent process returns the exit_status, which represents the exit status
-	of the child process after executing the built-in command.
+	*Finally, the parent process returns the exit_status, which represents
+	the exit status of the child process after executing the built-in command.
 */
 
 int	execute_builtin_child(t_exp_tok *exp_tok)
@@ -141,7 +141,7 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
 
 	pid = fork();
 	if (pid == -1)
-	 return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	else if (pid == 0)
 	{
 		exit_status = execute_builtin(exp_tok);
@@ -157,12 +157,14 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
 	input and output to their original values after executing
 	a built-in command within a pipeline.
 
-	*It takes two parameters: exp_tok, which represents the expanded token structure
-	containing information about the command, and pipes_save,
-	an array storing the original file descriptors of the command's input and output.
+	*It takes two parameters: exp_tok, which represents the expanded token
+	structure containing information about the command, and pipes_save,
+	an array storing the original file descriptors of the command's input
+	and output.
     
-	*If the command's input file descriptor (exp_tok->in) is different from the standard
-	input file descriptor (STDIN_FILENO), it means the input was redirected. In this case:
+	*If the command's input file descriptor (exp_tok->in) is different from
+	the standard input file descriptor (STDIN_FILENO), it means the input
+	was redirected. In this case:
         
 		-It uses dup2 to restore the original input file descriptor by
 		duplicating pipes_save[STDIN_FILENO] onto STDIN_FILENO.
@@ -170,7 +172,8 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
 		-It then closes pipes_save[STDIN_FILENO] since it's no longer needed.
     
 	*If the command's output file descriptor (exp_tok->out) is different from the
-	standard output file descriptor (STDOUT_FILENO), it means the output was redirected.
+	standard output file descriptor (STDOUT_FILENO), it means the output was
+	redirected.
 	In this case:
         
 		-It uses dup2 to restore the original output file descriptor by duplicating
@@ -178,8 +181,8 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
         
 		-It then closes pipes_save[STDOUT_FILENO] since it's no longer needed.
     
-	*Finally, the function returns EXIT_SUCCESS to indicate that the file descriptors
-	have been successfully reset.
+	*Finally, the function returns EXIT_SUCCESS to indicate that the file
+	descriptors have been successfully reset.
 */
 
 int	exbuiltin_reset_fd(t_exp_tok *exp_tok, int pipes_save[2])

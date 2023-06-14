@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_directory.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 18:31:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/30 15:47:53 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:36:40 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 	the function increments the index *i by 1 and returns the updated items array.
 */
 
-static char	**get_next_item(char *n, char *items[], size_t  *it_siz, size_t *i)
+static char	**get_next_item(char *n, char *items[], size_t *it_siz, size_t *i)
 {
 	if (*it_siz == (*i + 2))
 	{
@@ -101,7 +101,7 @@ static char	*get_items_sorted(char **unsorted)
 {
 	char	*items;
 	int		i;
-	
+
 	items = NULL;
 	unsorted = ft_sort_str_arr(unsorted);
 	i = 0;
@@ -163,13 +163,13 @@ static char	*get_items_sorted(char **unsorted)
 	and returns the result.
 */
 
-char    *get_directory_items(void)
+char	*get_directory_items(void)
 {
-	DIR             *d;
-	struct dirent   *dir;
-	char            **items;
-	size_t          items_size;
-	size_t          i;
+	DIR				*d;
+	struct dirent	*dir;
+	char			**items;
+	size_t			items_size;
+	size_t			i;
 
 	d = opendir(".");
 	if (d == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_pars_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:08:44 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/31 20:36:55 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:34:07 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static t_par_tok	**get_pars_toke(t_par_tok **pars_token, bool reset)
 {
 	static t_par_tok	**static_pars_token = NULL;
-	
+
 	if (pars_token == NULL && !reset)
 		return (static_pars_token);
 	if (reset)

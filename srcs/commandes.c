@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commandes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:24:32 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/13 18:42:58 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 17:00:12 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	echo_help(char *word)
 {
 	int	i;
-	
+
 	i = 2;
 	while (word[i])
 	{
@@ -29,7 +29,7 @@ static bool	echo_help(char *word)
 int	commande_echo(char **word)
 {
 	bool	new_line;
-	
+
 	new_line = true;
 	if (ft_strncmp(*word, "echo", ft_strlen(*word)) != 0)
 		return (EXIT_FAILURE);
@@ -42,7 +42,7 @@ int	commande_echo(char **word)
 			word++;
 		}
 		else
-			break;
+			break ;
 	}
 	while (*word)
 	{

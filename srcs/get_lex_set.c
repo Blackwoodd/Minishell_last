@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_lex_set.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 21:37:02 by nassm             #+#    #+#             */
-/*   Updated: 2023/05/30 16:11:48 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:42:40 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ is to set the value of the token array.
 It achieves this by calling the get_lextoken function with
 token as the parameter and false as the value for the reset parameter.
 Essentially, it acts as a wrapper function that simplifies the process of
- setting the token array by invoking the underlying logic 
- of the get_lex_token function.
+setting the token array by invoking the underlying logic 
+of the get_lex_token function.
 */
 
 void	set_lex_token(char **lex_toks)
