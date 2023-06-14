@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:29:55 by nbechon           #+#    #+#             */
-/*   Updated: 2023/05/25 16:34:37 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:04:34 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,142 +14,93 @@
 
 char	*take_firstword(char *input)
 {
-	int		i;
-	int		j;
-	int		len;
-	int		repaire;
 	char	*word;
+	int		i;
+	int		len;
+	int		space;
 
 	len = 0;
+	space = 0;
 	i = 0;
-	j = 0;
-	while (input[i] == ' ')
-		i++;
-	while (input[i] != ' ')
+	while (input[i])
 	{
-		len++;
+		if (input[i] == ' ')
+			space++;
 		i++;
 	}
-	j = i;
-	while (input[j] != '\0')
-	{
-		if (input[j] != ' ')
-		{
-			if (input[j] == '-' && input[j + 1] == 'n')
-			{
-				repaire = 1;
-				len += 2;
-			}
-			break ;
-		}
-		j++;
-	}
-	word = malloc (sizeof(char) * len + 1);
+	if (i == 0)
+		exit (0);
+	if (space == 0)
+		len = i;
+	else
+		while (input[len] != ' ' || input[len + 1] == '-' || input[len] == 'n')
+			len++;
+	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
 	i = 0;
-	while (input[i] == ' ')
-		i++;
-	j = 0;
-	while (input[i] != ' ')
+	if (space == 0)
 	{
-		word[j] = input[i];
-		j++;
-		i++;
-	}
-	if (repaire == 1)
-	{
-		while (input[i] != '-')
-			i++;
-		word[j] = ' ';
-		j++;
-		while (input[i] != ' ')
+		while (input[i])
 		{
-			if (input[i] == '-' && input[i + 1] == 'n')
-			{
-				word[j] = '-';
-				word[j + 1] = 'n';
-				word[j + 2] = '\0';
-				return (word);
-			}
-			word[j] = input[i];
-			j++;
+			word[i] = input[i];
 			i++;
 		}
 	}
-	word[j] = '\0';
-	return (word);
-}
-
-int	verif_nbr_word(char *input)
-{
-	int	i;
-
-	i = 0;
-	while ((input[i] <= 'a' && input[i] >= 'z')
-		|| (input[i] <= 'A' || input[i] <= 'Z'))
-		i++;
-	while (input[i] != ' ' && input[i])
-		i++;
-	if (input[i] == '-' && input[i + 1] == 'n')
+	else
 	{
-		while (input[i] != ' ' && input[i])
+		while (input[i] != ' ' || input[i + 1] == '-')
+		{
+			word[i] = input[i];
 			i++;
+		}
 	}
-	if (input[i] == '\0')
-		return (1);
-	return (0);
+	word[i] = '\0';
+	return (word);
 }
 
 char	*take_second_word(char *input)
 {
+	int		space;
+	int		len;
 	int		i;
 	int		j;
-	int		len;
-	int		repaire;
 	char	*word;
 
-	i = 0;
-	j = 0;
+	space = 0;
 	len = 0;
-	if (verif_nbr_word(input) == 1)
-		return (NULL);
-	while (input[i] == ' ')
-		i++;
-	while (input[i] != ' ')
-		i++;
-	while (input[i] == ' ')
-		i++;
-	if (input[i] == '\0')
-		return (NULL);
-	if (input[i] == '-' && input[i + 1] == 'n')
-	{	
-		i += 2;
-		while (input[i] != ' ')
-			i++;
-		while (input[i] == ' ')
-			i++;
-	}
-	repaire = i;
+	i = 0;
 	while (input[i])
 	{
-		len++;
+		if (input[i] == ' ')
+			space++;
 		i++;
 	}
-	word = malloc (sizeof(char) * len + 1);
+	if (space == 0)
+		return (NULL);
+	i = 0;
+	while (input[i] != ' ')
+		i++;
+	if (input[i + 1] == '-' && input[i + 2] == 'n')
+	{
+		i += 3;
+		if (space == 1)
+			return (0);
+	}
+	len = i;
+	while (input[len])
+		len++;
+	len -= i;
+	word = malloc(sizeof(char) * (len));
 	if (!word)
 		return (NULL);
-	while (input[repaire])
+	j = 0;
+	i++;
+	while (input[i] != '\0')
 	{
-		if (input[repaire] == ' ')
-		{	
-			while (input[repaire] == ' ')
-				repaire++;
-			repaire--;
-		}
-		word[j] = input[repaire];
+		word[j] = input[i];
+		i++;
 		j++;
-		repaire++;
 	}
 	word[j] = '\0';
 	return (word);

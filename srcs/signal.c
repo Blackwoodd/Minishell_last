@@ -3,39 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:59:33 by nbechon           #+#    #+#             */
-/*   Updated: 2023/05/25 16:34:28 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/07 10:48:20 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_sigint(int i)
+static void	handle_cmd_signal(int sig)
 {
-	i = 0;
-	printf("\nCombinaison Ctrl+C détectée.");
-	printf(" Cette combinaison doit jsute relancer le prompt.\n");
+	if (sig == SIGINT)
+	{
+		set_err_code(130);
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
 }
 
-void	handle_sigquit(int signum)
+static void	handle_global_signal(int sig)
 {
-	signum = 0;
-	printf("\nCombinaison Ctrl+\\ détectée. Cette combinaison ne fait rien.\n");
+	if (sig == SIGINT)
+	{
+		set_err_code(1);
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-void	signal_crtl(void)
+void	cmd_signal(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_cmd_signal);
+}
 
-	sa_int.sa_handler = handle_sigint;
-	sa_quit.sa_handler = handle_sigquit;
-	sa_int.sa_flags = 0;
-	sa_quit.sa_flags = 0;
-	sigemptyset(&sa_int.sa_mask);
-	sigemptyset(&sa_quit.sa_mask);
-	sigaction(SIGINT, &sa_int, NULL);
-	sigaction(SIGQUIT, &sa_quit, NULL);
+void	global_signal(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_global_signal);
 }
