@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/11 14:21:11 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/15 14:49:38 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	signal_crtl(void);
 //////////////////// commandes.c //////////////////
 
 int		commande_echo(char **word);
-int		commande_pwd(void);
+int		commande_pwd(char **word);
 int		commande_cd(char **word);
 
 ///////////////// takeword.c ////////////////////

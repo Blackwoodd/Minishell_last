@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:28:39 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 17:14:51 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:48:40 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	execute_builtin(t_exp_tok *exp_tok)
 	if (ft_strcmp(exp_tok->cmd[0], "cd") == 0)
 		return (commande_cd(exp_tok->cmd));
 	if (ft_strcmp(exp_tok->cmd[0], "pwd") == 0)
-		return (commande_pwd());
+		return (commande_pwd(exp_tok->cmd));
 	if (ft_strcmp(exp_tok->cmd[0], "unset") == 0)
 		return (commande_unset(exp_tok->cmd));
 	if (ft_strcmp(exp_tok->cmd[0], "exit") == 0)
