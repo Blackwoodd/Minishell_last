@@ -5,60 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 16:20:28 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/14 16:25:34 by nbechon          ###   ########.fr       */
+/*   Created: 2023/06/19 14:07:35 by nbechon           #+#    #+#             */
+/*   Updated: 2023/06/19 15:20:11 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static bool	is_valid_exit_arg(char *args[])
+int	check_no_number(char *tab)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (args && args[i])
+	if (tab[0] == '-' && (tab[1] >= 0 || tab[1] <= 9))
+		i++;
+	if (tab[0] == '+' && (tab[1] >= 0 || tab[1] <= 9))
+		i++;
+	while (tab[i])
 	{
-		j = 0;
-		while (args[i][j])
-		{
-			if (ft_issign(args[i][j]))
-				j++;
-			if (!ft_isdigit(args[i][j]))
-				return (false);
-			j++;
-		}
+		if (tab[i] < '0' || tab[i] > '9')
+			return (1);
 		i++;
 	}
-	return (true);
+	return (0);
 }
 
-int	exit_builtin(char *args[])
+void	print_error_arg(void)
+{
+	ft_fprintf(STDERR_FILENO, "exit\n");
+	ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
+}
+
+int	commande_exit(char **tab)
 {
 	long	exit_code;
-	int		i;
 
-	i = 0;
-	if (ft_strncmp(args[i], "exit", ft_strlen(args[i])) != 0)
+	if (ft_strncmp(tab[0], "exit", ft_strlen(tab[0])) != 0)
 		return (EXIT_FAILURE);
-	i++;
-	if (args[i])
-		exit_code = ft_atol(args[i]);
+	if (tab[0])
+		exit_code = ft_atol(tab[0]);
 	else
 		exit_code = get_err_code();
-	if (!is_valid_exit_arg(args + i) || ft_strlen(args[i]) > 19)
+	if (tab[1] != NULL)
 	{
-		ft_fprintf(STDERR_FILENO, "exit: not a valid argument\n");
-		exit_code = 255;
+		if (check_no_number(tab[1]) == 1 || ft_strlen(tab[1]) > 19)
+		{
+			ft_fprintf(STDERR_FILENO,
+				"exit\nexit: %s: numeric argument required\n", tab[1]);
+			exit_code = 255;
+		}
+		else
+		{
+			if (tab[2] != NULL)
+				return (print_error_arg(), EXIT_FAILURE);
+			ft_fprintf(STDERR_FILENO, "exit\n");
+		}
 	}
-	else if (args[i] && args[++i])
-	{
-		ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
+	else
 		ft_fprintf(STDERR_FILENO, "exit\n");
-		return (EXIT_FAILURE);
-	}
-	ft_fprintf(STDERR_FILENO, "exit\n");
 	exit(exit_code);
 	return (exit_code);
 }

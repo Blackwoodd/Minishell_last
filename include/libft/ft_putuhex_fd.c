@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putuhex_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:13:04 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/07 14:35:37 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:25:54 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_putuhex_fd(int fd, unsigned long long nbr)
 	hex = ft_htoa(nbr, 1);
 	if (hex == NULL)
 		return (0);
-	printed_chars = ft_putstr_fd(hex,fd);
+	printed_chars = ft_putstr_fd(hex, fd);
 	free(hex);
 	return (printed_chars);
 }

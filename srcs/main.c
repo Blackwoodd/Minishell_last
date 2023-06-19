@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:15 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/15 14:38:51 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:06:46 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	exit_core(void *to_free, int exit_status)
 		args = ft_calloc(3, sizeof(args));
 		args[0] = ft_strdup("exit");
 		args[1] = ft_itoa(get_err_code());
-		exit_builtin(args);
+		commande_exit(args);
 		ft_free_split(args);
 	}
 	rl_clear_history();
