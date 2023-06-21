@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:56:51 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 16:39:11 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:07:20 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,16 @@ char	*get_var(char *lex_tok)
 char	*interpret_env_var(char *lex_token)
 {
 	char	*result_token;
-
+	int		i;
+	
+	i = 0;
 	result_token = lex_token;
-	if (lex_token[0] != '\'' && ft_strlen(lex_token) > 1
-		&& ft_strchr(lex_token, '$'))
+	// while (lex_token[i] == '\'')
+	// 	i++;
+	if (lex_token[i] != '\016' && ft_strlen(lex_token) > 1
+			&& ft_strchr(lex_token, '$') && !ft_strchr(lex_token, '\016'))
 	{
-		if (ft_strstr(lex_token, "&?"))
+		if (ft_strstr(lex_token, "$?"))
 		{
 			free(lex_token);
 			return (ft_itoa(get_err_code()));
@@ -164,7 +168,7 @@ char	*interpret_env_var(char *lex_token)
 		return (result_token);
 	}
 	if (!ft_strchr(lex_token, '\'') && !ft_strchr(lex_token, '\"')
-		&& ft_strcmp(lex_token, "*\0") == 0)
+			&& ft_strcmp(lex_token, "*\0") == 0)
 	{
 		free(lex_token);
 		return (get_directory_items());

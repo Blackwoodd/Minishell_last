@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:58:20 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 17:17:59 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:02:48 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ bool	try_get_token_redir_buff(char ****buff, size_t **buff_size,
 {
 	if ((ft_strchr(get_current_lex_token(), '>')
 			&&ft_strlen(get_current_lex_token()) == 1)
-		|| (ft_strstr(get_current_lex_token(), ">>")
+			|| (ft_strstr(get_current_lex_token(), ">>")
 			&& ft_strlen(get_current_lex_token()) == 2))
 	{
 		*buff = &get_current_par_token()->out;
@@ -102,7 +102,7 @@ bool	try_get_token_redir_buff(char ****buff, size_t **buff_size,
 	}	
 	else if ((ft_strchr(get_current_lex_token(), '<')
 			&& ft_strlen(get_current_lex_token()) == 1)
-		|| (ft_strstr(get_current_lex_token(), "<<")
+			|| (ft_strstr(get_current_lex_token(), "<<")
 			&& ft_strlen(get_current_lex_token()) == 2))
 	{
 		*buff = &get_current_par_token()->in;

@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:39:21 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 16:53:52 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:06:00 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 int	get_pars_tok(char *lex_tok[], t_par_tok *pars_tok[], t_iter *iter)
 {
 	int	tmp;
-
+	
 	tmp = EXIT_SUCCESS;
 	tmp = get_token_type(lex_tok[iter[lex]], iter);
 	if (tmp != EXIT_SUCCESS)
