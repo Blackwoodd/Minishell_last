@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/15 16:24:55 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:30:40 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ bool		verif_is_token(char *token);
 
 ///////////////	join_quotes.c ///////////////////
 
-int			join_quote(char ***token);
+int			join_quote(char **token);
 
 /////////////// sub_token_utils.c ////////////////
 

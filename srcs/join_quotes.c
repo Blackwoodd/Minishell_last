@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 16:44:41 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:58:03 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,29 +205,178 @@ int	join_token(char ***token, int i)
 	to indicate successful execution.
 */
 
-int	join_quote(char ***token)
+bool    find_quote(char *token)
+{
+	if (strchr(token, '\'') != NULL || strchr(token, '\"') != NULL)
+		return (true);
+	else
+	return (false);
+}
+
+bool    verif_even_squote(char *token)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (token[i])
+	{
+		if (token[i] == '\'')
+			count++;
+		i++;
+	}
+	if (count % 2 == 0)
+		return (true);
+	else
+		return (false);
+}
+
+bool    verif_even_dquote(char *token)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while(token[i])
+	{
+		if (token[i] == '\"')
+			count++;
+		i++;
+	}
+	if (count % 2 == 0)
+		return (true);
+	else
+		return (false);
+}
+
+bool    count_quote(char *token)
+{
+	int i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '\'')
+		{
+			if (verif_even_squote(token))
+				return (true);
+			else
+				return (false);
+		}
+		if (token[i] =='\"')
+		{
+			if (verif_even_dquote(token))
+				return (true);
+			else
+				return (false);
+		}
+		i++;
+	}
+	return (false);
+}
+
+void handle_squote(char **token)
+{
+	int i, j;
+	int has_dollar = 0;
+
+	// Vérifier si le caractère '$' est présent dans la chaîne
+	j = 0;
+	for (i = 0; (*token) && (*token)[i]; i++)
+	{
+		if ((*token)[i] == '$')
+		{
+			has_dollar = 1;
+			break;
+		}
+	}
+	char *temp = strdup(*token);
+	// Si le caractère '$' est présent, insérer '\016' au début de la chaîne
+	if (has_dollar)
+	{
+		
+		(*token)[0] = '\016';
+		j++;
+	}
+		// Copier les caractères de la chaîne temporaire après '\016'
+	for (i = 0; temp[i]; i++)
+	{
+		if (temp[i] != '\'')
+		{
+			(*token)[j] = temp[i];
+			j++;
+		}
+	}
+	(*token)[j] = '\0';
+	free(temp);
+}
+
+void	handle_dquote(char *token)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (token && token[i])
+	{
+		if (token[i] != '\"')
+		{
+			token[j] = token[i];
+			j++;
+		}
+		i++;
+	}
+	token[j] = '\0';
+}
+
+char	*utils_core_jquote(char *token)
 {
 	int	i;
 
 	i = 0;
-	if (*token == NULL)
-		return (EXIT_FAILURE);
-	while ((*token)[i])
+	while (token && token[i])
 	{
-		if ((*token)[i] && ft_setinstr((*token)[i], "\'\"") == true)
+		if (token[i] == '\'')
 		{
-			if (join_token(token, i) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			else
-			{
-				if (ft_setinstr((*token)[i], "\'\"") == false)
-					i += 2;
-				else
-					i++;
-			}
+			handle_squote(&token);
+			break ;
 		}
-		else
-			i++;
+		if (token[i] == '\"')
+		{
+			handle_dquote(token);
+			break ;
+		}
+		i++;
+	}
+	return (token);
+}
+
+int    core_jquote(char *token)
+{
+	if (count_quote(token) == true)
+	{
+		token = utils_core_jquote(token);
+		return (true);
+	}
+	return (false);
+}
+
+int	join_quote(char **token)
+{
+	int	i;
+
+	i = 0;
+	while (token && token[i])
+	{
+		if (find_quote(token[i]))
+		{
+			if (!core_jquote(token[i]))
+				return (EXIT_FAILURE);
+		}
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

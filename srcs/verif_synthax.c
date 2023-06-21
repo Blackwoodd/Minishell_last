@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:04:32 by nsalhi            #+#    #+#             */
-/*   Updated: 2023/06/14 16:34:35 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:51:45 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ bool	valid_synthax_str(char	*rline)
 		if (rline[i] == ')')
 			if (!bracket_open(rline, i))
 				return (false);
-		if (rline[i] == ';' || rline[i] == '\\')
+		if (rline[i] == ';' || rline[i] == '\\') //SOUCIS AVEC ECHO POUR "ECHO \n HELO"
 			return (false);
 		if (rline[i])
 			i++;

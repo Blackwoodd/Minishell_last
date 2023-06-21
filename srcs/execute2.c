@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute2.c                                      :+:      :+:    :+:   */
+/*   execute2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:41:42 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/14 17:19:01 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:00:22 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cmd_not_found(t_exp_tok *exp_tok)
 {
 	char	*str;
 
-	str = ft_strjoin(exp_tok->cmd[0], ": Command not found");
+	str = ft_strjoin(exp_tok->cmd[0], ": command not found");
 	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
 	free(str);
