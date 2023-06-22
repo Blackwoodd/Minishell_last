@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/22 18:16:24 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/22 18:34:23 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,8 +407,14 @@ int handle_squote(char *str, int i)
     int k;
 
     i++;
-    while (str[i] && str[i] != '\'') {
-        str[j] = str[i];
+    while (str[i] && str[i] != '\'')
+	{
+		if (str[i] == '$')
+		{
+			str[j] = '\016';
+			j++;
+		}
+        	str[j] = str[i];
         j++;
         i++;
     }
