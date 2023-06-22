@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/21 14:58:03 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:07:14 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,18 +205,18 @@ int	join_token(char ***token, int i)
 	to indicate successful execution.
 */
 
-bool    find_quote(char *token)
+bool	find_quote(char *token)
 {
 	if (strchr(token, '\'') != NULL || strchr(token, '\"') != NULL)
 		return (true);
 	else
-	return (false);
+		return (false);
 }
 
-bool    verif_even_squote(char *token)
+bool	verif_even_squote(char *token)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -234,12 +234,12 @@ bool    verif_even_squote(char *token)
 
 bool    verif_even_dquote(char *token)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
-	while(token[i])
+	while (token[i])
 	{
 		if (token[i] == '\"')
 			count++;
@@ -251,9 +251,9 @@ bool    verif_even_dquote(char *token)
 		return (false);
 }
 
-bool    count_quote(char *token)
+bool	count_quote(char *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (token[i])
@@ -265,7 +265,7 @@ bool    count_quote(char *token)
 			else
 				return (false);
 		}
-		if (token[i] =='\"')
+		if (token[i] == '\"')
 		{
 			if (verif_even_dquote(token))
 				return (true);
@@ -277,11 +277,13 @@ bool    count_quote(char *token)
 	return (false);
 }
 
-void handle_squote(char **token)
+void	handle_squote(char **token)
 {
-	int i, j;
-	int has_dollar = 0;
+	int	i;
+	int	j;
+	int	has_dollar;
 
+	has_dollar = 0;
 	// Vérifier si le caractère '$' est présent dans la chaîne
 	j = 0;
 	for (i = 0; (*token) && (*token)[i]; i++)
@@ -289,14 +291,13 @@ void handle_squote(char **token)
 		if ((*token)[i] == '$')
 		{
 			has_dollar = 1;
-			break;
+			break ;
 		}
 	}
 	char *temp = strdup(*token);
 	// Si le caractère '$' est présent, insérer '\016' au début de la chaîne
 	if (has_dollar)
 	{
-		
 		(*token)[0] = '\016';
 		j++;
 	}
@@ -340,15 +341,9 @@ char	*utils_core_jquote(char *token)
 	while (token && token[i])
 	{
 		if (token[i] == '\'')
-		{
 			handle_squote(&token);
-			break ;
-		}
 		if (token[i] == '\"')
-		{
 			handle_dquote(token);
-			break ;
-		}
 		i++;
 	}
 	return (token);
@@ -359,6 +354,8 @@ int    core_jquote(char *token)
 	if (count_quote(token) == true)
 	{
 		token = utils_core_jquote(token);
+		printf ("%s", token);
+		exit (0);
 		return (true);
 	}
 	return (false);

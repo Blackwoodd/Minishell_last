@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/21 14:54:33 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:46:58 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ char	**resize_token(char **token)
 
 int lexer(char  *rline)
 {
-	char    **token;
+	char	**token;
 	int		exit_status;
 
 	if (!valid_synthax_str(rline))
