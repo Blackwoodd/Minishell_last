@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/22 18:34:23 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/23 11:14:25 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,6 +400,7 @@ bool	count_quote(char *token)
 	else
 	return (false);
 }
+/*
 
 int handle_squote(char *str, int i)
 {
@@ -486,6 +487,58 @@ void handle_quote(char *token)
 	}
 	token[i] = '\0';
 }
+*/
+
+void handle_quote(char *str) {
+    int i, j;
+    int nested_single = 0;
+    int nested_double = 0;
+	
+    i = j = 0;
+
+    // Count quotes and check if they are balanced
+    for (i = 0; str[i]; i++) {
+        if (str[i] == '\'') {
+            nested_single++;
+        } else if (str[i] == '\"') {
+            nested_double++;
+        }
+    }
+
+    // Handle quotes
+    i = 0;
+    while (str[i]) {
+        if (str[i] == '\'') {
+            i++;
+            while (str[i] && str[i] != '\'')
+			{
+                if (str[i] == '\"') {
+                    nested_double++;
+                }
+				if (str[i] == '$')
+					str[j] = '\016';
+				else
+                	str[j] = str[i];
+				i++;
+				j++;
+            }
+        } else if (str[i] == '\"') {
+            i++;
+            while (str[i] && str[i] != '\"') {
+                if (str[i] == '\'') {
+                    nested_single++;
+                }
+                str[j++] = str[i++];
+            }
+        } else {
+            str[j++] = str[i++];
+        }
+    }
+
+    // Null-terminate the modified string
+    str[j] = '\0';
+}
+
 int    core_jquote(char *token)
 {
 // 	if (count_quote(token) == true)
