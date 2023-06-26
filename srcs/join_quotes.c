@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/23 11:29:44 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/23 16:09:11 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,7 +385,7 @@ bool	count_quote(char *token)
 		if (token[i] == '\"')
 		{
 			i++;
-			while (token[i] &&token[i] != '\"')
+			while (token[i] && token[i] != '\"')
 			{
 				if (token[i] == '\'')
 					k++;
@@ -394,11 +394,11 @@ bool	count_quote(char *token)
 		}
 		i++;
 	}
-	count = count - k -j;
+	count = count - k - j;
 	if (count % 2 == 0)
 		return (true);
 	else
-	return (false);
+		return (false);
 }
 /*
 
@@ -507,14 +507,15 @@ void handle_quote(char *str) {
 
     // Handle quotes
     i = 0;
-    while (str[i]) {
-        if (str[i] == '\'') {
+    while (str[i])
+	{
+        if (str[i] == '\'')
+		{
             i++;
             while (str[i] && str[i] != '\'')
 			{
-                if (str[i] == '\"') {
+                if (str[i] == '\"')
                     nested_double++;
-                }
 				if (str[i] == '$')
 				{
 					str[j++] = '\016';
@@ -523,23 +524,28 @@ void handle_quote(char *str) {
 					i++;
 				}
 				else
-                	str[j] = str[i];
+					str[j] = str[i];
 				i++;
 				j++;
-            }
-        } else if (str[i] == '\"') {
-            i++;
-            while (str[i] && str[i] != '\"') {
-                if (str[i] == '\'') {
-                    nested_single++;
-                }
-                str[j++] = str[i++];
-            }
-        } else {
-            str[j++] = str[i++];
-        }
-    }
-
+			}
+			if (str[i] == '\'')
+				i++;
+		}
+		else if (str[i] == '\"')
+		{
+			i++;
+			while (str[i] && str[i] != '\"')
+			{
+				if (str[i] == '\'')
+					nested_single++;
+				str[j++] = str[i++];
+			}
+			if (str[i] == '\"')
+				i++;
+		}
+		else
+			str[j++] = str[i++];
+	}
     // Null-terminate the modified string
     str[j] = '\0';
 }
