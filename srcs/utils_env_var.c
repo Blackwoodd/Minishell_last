@@ -155,8 +155,8 @@ t_env	*init_envar(char **envp)
 void	free_envar(t_env *envar)
 {
 	envar->envp = NULL;
-	//if (&envar->env_var)
-	//	ft_free_str_array(&envar->env_var);
+	if (&envar->env_var)
+		ft_free_str_array(&envar->env_var);
 	if (envar->pwd)
 		free(envar->pwd);
 	if (envar->oldpwd)
