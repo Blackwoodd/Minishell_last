@@ -14,9 +14,10 @@
 
 int	commande_cd(char **word)
 {
-	char	cwd[1000];
+	char		cwd[1000];
+	const char	*home;
 
-	if (word[2] != NULL)
+	if (word[2] != NULL && word[1] != NULL)
 	{
 		printf ("cd: too many arguments\n");
 		return (EXIT_FAILURE);
@@ -25,7 +26,11 @@ int	commande_cd(char **word)
 	{
 		if (word[1] == NULL)
 		{
-			chdir("..");
+			home = getenv("HOME");
+			if (home == NULL)
+				return (EXIT_FAILURE);
+			if (chdir(home) != 0)
+				return (EXIT_FAILURE);
 			return (EXIT_SUCCESS);
 		}
 		if (word[1][0] == '-' && !word[1][1])

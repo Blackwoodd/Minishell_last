@@ -17,10 +17,10 @@ int	check_no_number(char *tab)
 	int	i;
 
 	i = 0;
-	if (tab[0] == '-' && (tab[1] >= 0 || tab[1] <= 9))
-		i++;
-	if (tab[0] == '+' && (tab[1] >= 0 || tab[1] <= 9))
-		i++;
+	//if (tab[0] == '-' && (tab[1] >= 0 || tab[1] <= 9))
+	//	i++;
+	//if (tab[0] == '+' && (tab[1] >= 0 || tab[1] <= 9))
+	//	i++;
 	while (tab[i])
 	{
 		if (tab[i] < '0' || tab[i] > '9')

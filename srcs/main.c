@@ -24,7 +24,7 @@ static int	exit_core(void *to_free, int exit_status)
 		commande_exit(args);
 		ft_free_split(args);
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	free(to_free);
 	free_envar(get_envar());
 	return (exit_status);
