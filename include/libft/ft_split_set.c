@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:13 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/15 16:29:54 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/27 17:42:47 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,36 @@ static size_t	get_size(char *str, char *set)
 	return (size);
 }
 
-char	**ft_split_set(char *str, char *set)
+char **ft_split_set(char *str, char *set)
 {
-	char	**arr;
-	int		arr_len;
-	int		i;
-	int		j;
+    char **arr;
+    int arr_len;
+    int i;
+    int j;
+    bool inside_quotes = false;
 
-	if (str == NULL || set == NULL)
-		return (NULL);
-	arr_len = get_arr_len(str, set);
-	arr = ft_calloc(arr_len + 1, sizeof(*arr));
-	if (arr == NULL)
-		return (NULL);
-	i = 0;
-	while (i < arr_len && *str)
-	{
-		while (*str && ft_strchr(set, *str) != NULL)
-			str++;
-		arr[i] = ft_calloc(get_size(str, set) + 1, sizeof(*arr[i]));
-		if (arr[i] == NULL)
-			return (ft_free_split(arr));
-		j = 0;
-		while (*str && ft_strchr(set, *str) == NULL)
-			arr[i][j++] = *str++;
-		i++;
-	}
-	return (arr);
+    if (str == NULL || set == NULL)
+        return (NULL);
+    arr_len = get_arr_len(str, set);
+    arr = ft_calloc(arr_len + 1, sizeof(*arr));
+    if (arr == NULL)
+        return (NULL);
+    i = 0;
+    while (i < arr_len && *str)
+    {
+        while (*str && ft_strchr(set, *str) != NULL)
+            str++;
+        arr[i] = ft_calloc(get_size(str, set) + 1, sizeof(*arr[i]));
+        if (arr[i] == NULL)
+            return (ft_free_split(arr));
+        j = 0;
+        while (*str && (ft_strchr(set, *str) == NULL || inside_quotes))
+        {
+            if (*str == '\'' || *str == '"')
+                inside_quotes = !inside_quotes;
+            arr[i][j++] = *str++;
+        }
+        i++;
+    }
+    return (arr);
 }
