@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/23 16:09:11 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/28 15:31:19 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -516,17 +516,15 @@ void handle_quote(char *str) {
 			{
                 if (str[i] == '\"')
                     nested_double++;
-				if (str[i] == '$')
+				if (str[i] == '$' && (str[i +1] != '\'' || str[i + 1] != '\"'))
 				{
 					str[j++] = '\016';
 					str[j] = '$';
 					j++;
 					i++;
 				}
-				else
-					str[j] = str[i];
-				i++;
-				j++;
+				if (str[i] != '\'')
+					str[j++] = str[i++];
 			}
 			if (str[i] == '\'')
 				i++;
@@ -538,11 +536,19 @@ void handle_quote(char *str) {
 			{
 				if (str[i] == '\'')
 					nested_single++;
-				str[j++] = str[i++];
+				if (str[i] == '$' && str[i + 1] == '\"')
+				{
+					i++;
+				}
+				if (str[i] != '\"')
+					str[j++] = str[i++];
+				
 			}
 			if (str[i] == '\"')
 				i++;
 		}
+		if (str[i] == '$' && str[i +1] == '\'')
+			i++;
 		else
 			str[j++] = str[i++];
 	}
