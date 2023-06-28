@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/28 15:31:19 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/28 23:09:48 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -489,11 +489,39 @@ void handle_quote(char *token)
 }
 */
 
+bool	check_if_var(char *str)
+{
+	char	*tmp;
+	int		i;
+	int 	j;
+
+	i = 0;
+	while (str[i] != '$')
+		i++;
+	j = i;
+	while (str[j] != '\"')
+		j++;
+	tmp = strndup(&str[i], j - i);
+	tmp = get_env_variable(str,get_var(str));
+	i = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] == '\"' && tmp[i + 1] == '\"')
+		{
+			free(tmp);
+			return (false);
+		}
+		i++;
+	}
+	free(tmp);
+	return (true);
+}
+
 void handle_quote(char *str) {
     int i, j;
     int nested_single = 0;
     int nested_double = 0;
-	
+
     i = j = 0;
 
     // Count quotes and check if they are balanced
@@ -538,7 +566,16 @@ void handle_quote(char *str) {
 					nested_single++;
 				if (str[i] == '$' && str[i + 1] == '\"')
 				{
-					i++;
+					str[j] = '\016';
+					j++;
+				}
+				else if (str[i] ==  '$')
+				{
+					if (check_if_var(&str[j]) == false)
+					{
+						while (str[i] != '\"')
+							i++;
+					}
 				}
 				if (str[i] != '\"')
 					str[j++] = str[i++];
