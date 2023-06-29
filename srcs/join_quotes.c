@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/28 23:09:48 by nassm            ###   ########.fr       */
+/*   Updated: 2023/06/29 16:16:38 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -517,6 +517,39 @@ bool	check_if_var(char *str)
 	return (true);
 }
 
+bool	check_if_var_bis(char *str)
+{
+	char	*tmp;
+	int		i;
+	int 	j;
+
+	i = 0;
+	while (str[i] != '$')
+		i++;
+	j = i;
+	while (str[j] && (str[j] != '\"' && str[j] != '\''))
+		j++;
+	tmp = strndup(&str[i], j - i);
+	tmp = get_env_variable(str,get_var(str));
+	i = 0;
+	if (tmp == NULL || ft_strlen(tmp) == 0)
+	{
+		free(tmp);
+		return (false);
+	}
+	while (tmp[i])
+	{
+		if (tmp[i] == '\"' && tmp[i + 1] == '\"')
+		{
+			free(tmp);
+			return (false);
+		}
+		i++;
+	}
+	free(tmp);
+	return (true);
+}
+
 void handle_quote(char *str) {
     int i, j;
     int nested_single = 0;
@@ -569,7 +602,7 @@ void handle_quote(char *str) {
 					str[j] = '\016';
 					j++;
 				}
-				else if (str[i] ==  '$')
+				if (str[i] ==  '$')
 				{
 					if (check_if_var(&str[j]) == false)
 					{
@@ -586,6 +619,16 @@ void handle_quote(char *str) {
 		}
 		if (str[i] == '$' && str[i +1] == '\'')
 			i++;
+		if (str[i] ==  '$')
+		{
+			if (check_if_var_bis(&str[j]) == false)
+			{
+				while (str[i] != '\"' && str[i] != '\'')
+					i++;
+			}
+			else
+				str[j++] = str[i++];
+		}
 		else
 			str[j++] = str[i++];
 	}
