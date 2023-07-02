@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:15 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/19 14:06:46 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/06/30 15:01:34 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	exit_core(void *to_free, int exit_status)
 	return (exit_status);
 }
 
-static int	core(void)
+int	core(void)
 {
 	char	*buff;
 	int		exit_code;
@@ -93,6 +93,8 @@ static int	hide_ctrl_c(void)
 	free(stty);
 	return (EXIT_SUCCESS);
 }
+
+
 
 int	main(int ac, char **av, char **envp)
 {

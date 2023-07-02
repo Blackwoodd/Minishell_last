@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/29 16:16:38 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/02 16:02:02 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -552,11 +552,12 @@ bool	check_if_var_bis(char *str)
 
 void handle_quote(char *str) {
     int i, j;
+	int	len;
     int nested_single = 0;
     int nested_double = 0;
 
     i = j = 0;
-
+	len = ft_strlen(str);
     // Count quotes and check if they are balanced
     for (i = 0; str[i]; i++) {
         if (str[i] == '\'') {
@@ -568,7 +569,7 @@ void handle_quote(char *str) {
 
     // Handle quotes
     i = 0;
-    while (str[i])
+    while (str[i] && i < len)
 	{
         if (str[i] == '\'')
 		{
@@ -629,7 +630,7 @@ void handle_quote(char *str) {
 			else
 				str[j++] = str[i++];
 		}
-		else
+		if (str[i] != '\'' && str[i] != '\"' && i < len)
 			str[j++] = str[i++];
 	}
     // Null-terminate the modified string

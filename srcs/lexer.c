@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/22 13:46:58 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/02 15:47:48 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ char	**resize_token(char **token)
 	return (resized);
 }
 
+
 int lexer(char  *rline)
 {
 	char	**token;
@@ -201,8 +202,8 @@ int lexer(char  *rline)
 	token = ft_split_set(rline, " \t\r\v\f\n");
 	if (join_quote(token) == EXIT_FAILURE)
 	{
-		ft_free_str_array(&token);
-		return (EXIT_FAILURE);
+		ft_free_tab(token);
+		core();
 	}
 	token = resize_token(token);
 	if (token == NULL)
