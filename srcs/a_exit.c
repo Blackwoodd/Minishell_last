@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   a_exit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:07:35 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/19 15:20:11 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/03 17:44:00 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	print_error_arg(void)
 int	commande_exit(char **tab)
 {
 	long	exit_code;
+	t_env	*envar;
 
+	envar = get_envar();
 	if (ft_strncmp(tab[0], "exit", ft_strlen(tab[0])) != 0)
 		return (EXIT_FAILURE);
 	if (tab[0])
@@ -63,6 +65,7 @@ int	commande_exit(char **tab)
 	}
 	else
 		ft_fprintf(STDERR_FILENO, "exit\n");
+	free_envar(envar);
 	exit(exit_code);
 	return (exit_code);
 }

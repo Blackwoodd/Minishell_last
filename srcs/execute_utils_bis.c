@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_utils_bis.c                             :+:      :+:    :+:   */
+/*   execute_utils_bis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:28:39 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/15 15:52:28 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:51:30 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 	since the process exits before reaching it.
 */
 
-int	execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
+int	 execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
 {
 	int		s;
 
