@@ -66,28 +66,44 @@ static int	norm_unset(char **tab, t_env *envar, int i, int j)
 
 int	commande_unset(char **tab)
 {
-	int		i;
-	int		j;
-	int		out;
-	t_env	*envar;
+        int             i;
+        int             j;
+        int             out;
+        t_env   *envar;
 
-	j = 1;
-	envar = get_envar();
-	if (tab[j] == NULL)
-		return (EXIT_SUCCESS);
-	while (tab[j])
-	{
-		i = 0;
-		while (envar->env_var[i])
-		{
-			out = norm_unset(tab, envar, i, j);
-			if (out == 2)
-				break ;
-			else if (out == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			i++;
-		}
-		j++;
-	}
-	return (EXIT_SUCCESS);
+        envar = get_envar();
+        if (tab[1] == NULL)
+                return (EXIT_SUCCESS);
+        j = 0;
+        if (tab[1][0] >= '0' && tab[1][0] <= '9')
+        {
+                printf ("export: `%s': not a valid identifier\n", tab[1]);
+                return (EXIT_FAILURE);
+        }
+        while (tab[1][j])
+        {
+                if ((tab[1][j] >= 'A' && tab[1][j] <= 'Z') || (tab[1][j] >= 'a' && tab[1][j] <= 'z')  || (tab[1][j] >= '0' && tab[1][j] <= '9'))
+                        j++;
+                else
+                {
+                        printf ("export: `%s': not a valid identifier\n", tab[1]);
+                        return (EXIT_FAILURE);
+                }
+        }
+        j = 1;
+        while (tab[j])
+        {
+                i = 0;
+                while (envar->env_var[i])
+                {
+                        out = norm_unset(tab, envar, i, j);
+                        if (out == 2)
+                                break ;
+                        else if (out == EXIT_FAILURE)
+                                return (EXIT_FAILURE);
+                        i++;
+                }
+                j++;
+        }
+        return (EXIT_SUCCESS);
 }
