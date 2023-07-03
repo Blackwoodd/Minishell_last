@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/02 16:02:02 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/03 15:13:39 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -494,7 +494,7 @@ bool	check_if_var(char *str)
 	char	*tmp;
 	int		i;
 	int 	j;
-
+	
 	i = 0;
 	while (str[i] != '$')
 		i++;
@@ -506,7 +506,7 @@ bool	check_if_var(char *str)
 	i = 0;
 	while (tmp[i])
 	{
-		if (tmp[i] == '\"' && tmp[i + 1] == '\"')
+		if (tmp[0] == '\"' && tmp[1] == '\"')
 		{
 			free(tmp);
 			return (false);
