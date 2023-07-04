@@ -14,18 +14,45 @@
 
 int     commande_export(char **tab)
 {
+	int             count;
         int             i;
-        t_env   *envar;
+        t_env   	*envar;
 
         i = 0;
+        count = 0;
         envar = get_envar();
         if (envar == NULL || envar->env_var == NULL)
                 return (EXIT_FAILURE);
-        if (tab[1] != NULL && tab[1][0] == '-')
+        if (tab[1] != NULL)
         {
-                printf("export: -%c: invalid option\n", tab[1][1]);
+                if (tab[1][0] == '-')
+                {
+                        printf("export: -%c: invalid option\n", tab[1][1]);
+                        return (EXIT_FAILURE);
+                }
+                while (tab[1][i])
+                {
+                        if (tab[1][i] == '=')
+                        count++;
+                        if (tab[1][i] == '!')
+                        {
+                                while (tab[1][i])
+                                {
+                                        printf ("%c", tab[1][i]);
+                                        i++;
+                                }
+                                printf (": event not found\n");
+                                return (EXIT_FAILURE);
+                        }
+                        i++;
+                }
+        }
+        if (tab[1] && count < 1)
+        {
+                printf ("export: %s: not a valid identifier\n", tab[2]);
                 return (EXIT_FAILURE);
         }
+        i = 0;
         if (tab[1] != NULL)
         {
                 if (tab[1][0] == '=' || (tab[1][0] >= '0' && tab[1][0] <= '9'))

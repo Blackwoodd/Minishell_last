@@ -84,6 +84,17 @@ int	commande_unset(char **tab)
         {
                 if ((tab[1][j] >= 'A' && tab[1][j] <= 'Z') || (tab[1][j] >= 'a' && tab[1][j] <= 'z')  || (tab[1][j] >= '0' && tab[1][j] <= '9'))
                         j++;
+                else if (tab[1][j] == '!')
+                {
+                        i = j;
+                        while (tab[1][i])
+                        {
+                                printf ("%c", tab[1][i]);
+                                i++;
+                        }
+                        printf (": event not found\n");
+                        return (EXIT_FAILURE);
+                }
                 else
                 {
                         printf ("export: `%s': not a valid identifier\n", tab[1]);
@@ -107,3 +118,4 @@ int	commande_unset(char **tab)
         }
         return (EXIT_SUCCESS);
 }
+
