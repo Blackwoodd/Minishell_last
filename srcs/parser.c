@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:39:21 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/21 17:06:00 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/04 16:08:31 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,52 +261,6 @@ int	parser(char *lexer_token[])
 	if (exit_code == EXIT_SYNTAX_ERROR)
 		return (EXIT_SYNTAX_ERROR);
 	token = get_pars_token();
+	ft_free_tab(lexer_token);
 	return (free_pars_token(token, expander(token)));
 }
-
-/*
-int main(int argc, char *argv[], char **envp) {
-	//t_par_tok	**token;
-	int			exit_code;
-	t_env	*envar;
-	
-	envar = init_envar(envp);
-	set_envar(envar);
-	// Check if the required number of arguments is provided
-	if (argc < 2) {
-		printf("Usage: ./program_name <lexer_token>\n");
-		return EXIT_FAILURE;
-	}
-
-	// Call the parser function with the lexer_token argument
-	exit_code = parser(argv + 1);
-
-	// Process the exit code returned by the parser
-	switch (exit_code) {
-		case EXIT_FAILURE:
-			printf("Parser failed.\n");
-			break;
-		case EXIT_SYNTAX_ERROR:
-			printf("Syntax error.\n");
-			break;
-		default:
-			printf("Parser succeeded.\n");
-			break;
-	}
-
-	return exit_code;
-}
-
-int main()
-{
-    char *tokens[] = {"ls", "cat", "/dev/stdin", NULL};
-	// Predefined array of tokens
-    int result_tokens;
-
-    result_tokens = parser(tokens);
-
-	if (result_tokens == 1)
-		printf("1\n");
-    return 0;
-}
-*/

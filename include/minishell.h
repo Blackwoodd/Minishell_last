@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/29 19:26:40 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/04 15:26:35 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int			commande_cd(char **word);
 int			commande_env(char **env);
 int			commande_export(char **env);
 int			commande_unset(char **tab);
-int			commande_exit(char **tab);
+int			commande_exit(char **tab, t_exp_tok *exp_tok);
 
 //////////// verif_synthax.c ////////////////////
 

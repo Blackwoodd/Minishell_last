@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/02 15:47:48 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/04 16:05:35 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ char	**resize_token(char **token)
 	return (resized);
 }
 
-
 int lexer(char  *rline)
 {
 	char	**token;
@@ -212,7 +211,6 @@ int lexer(char  *rline)
 	if (!valid_syntax_token(token))
 		return (exit_syntax_error());
 	exit_status = parser(token);
-	ft_free_tab(token);
 	reset_lex_token();
 	return (exit_status);
 }

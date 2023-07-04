@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:15 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/02 16:11:22 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/04 15:27:42 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	exit_core(void *to_free, int exit_status)
 		args = ft_calloc(3, sizeof(args));
 		args[0] = ft_strdup("exit");
 		args[1] = ft_itoa(get_err_code());
-		commande_exit(args);
+		commande_exit(args, NULL);
 		ft_free_split(args);
 	}
 	rl_clear_history();
