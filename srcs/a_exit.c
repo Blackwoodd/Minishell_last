@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:07:35 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/04 15:28:15 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/04 18:58:32 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ void	print_error_arg(void)
 
 int	commande_exit(char **tab, t_exp_tok *exp_tok)
 {
-	long	exit_code;
-	t_env	*envar;
+	long		exit_code;
+	t_env		*envar;
+	t_par_tok	**par_tok;
 
 	envar = get_envar();
+	par_tok = get_pars_token();
 	if (ft_strncmp(tab[0], "exit", ft_strlen(tab[0])) != 0)
 		return (EXIT_FAILURE);
 	if (tab[0])
@@ -69,6 +71,7 @@ int	commande_exit(char **tab, t_exp_tok *exp_tok)
 	ft_free_tab(tab);
 	if (exp_tok != NULL)
 		free(exp_tok);
+	free_pars_token(par_tok, 0);
 	exit(exit_code);
 	return (exit_code);
 }
