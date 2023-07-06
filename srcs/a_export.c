@@ -16,11 +16,18 @@ int     commande_export(char **tab)
 {
 	int             count;
         int             i;
+	int		j;
         t_env   	*envar;
 
         i = 0;
         count = 0;
+	j = 1;
+	while (tab[j])
+        	j++;
+        j--;
         envar = get_envar();
+	if (tab[1] != NULL && (tab[1][0] < '!' || tab[1][0] > '}'))
+		tab[1] = NULL;
         if (envar == NULL || envar->env_var == NULL)
                 return (EXIT_FAILURE);
         if (tab[1] != NULL)
@@ -33,7 +40,7 @@ int     commande_export(char **tab)
                 while (tab[1][i])
                 {
                         if (tab[1][i] == '=')
-                        count++;
+				count++;
                         if (tab[1][i] == '!')
                         {
                                 while (tab[1][i])
@@ -41,13 +48,13 @@ int     commande_export(char **tab)
                                         printf ("%c", tab[1][i]);
                                         i++;
                                 }
-                                printf (": event not found\n");
-                                return (EXIT_FAILURE);
+				printf (": event not found\n");
+				return (EXIT_FAILURE);
                         }
                         i++;
                 }
         }
-        if (tab[1] && count < 1)
+        if (tab[1] != NULL && tab[2] != NULL && count < 1)
         {
                 printf ("export: %s: not a valid identifier\n", tab[2]);
                 return (EXIT_FAILURE);
@@ -62,7 +69,9 @@ int     commande_export(char **tab)
                 }
                 while (tab[1][i] != '=')
                 {
-                        if ((tab[1][i] >= 'A' && tab[1][i] <= 'Z') || (tab[1][i] >= 'a' && tab[1][i] <= 'z')  || (tab[1][i] >= '0' && tab[1][i] <= '9'))
+			if (tab[1][i] == '\0')
+				break ;
+                        else if ((tab[1][i] >= 'A' && tab[1][i] <= 'Z') || (tab[1][i] >= 'a' && tab[1][i] <= 'z')  || (tab[1][i] >= '0' && tab[1][i] <= '9'))
                                 i++;
                         else
                         {
@@ -72,36 +81,43 @@ int     commande_export(char **tab)
                 }
         }
         i = 0;
-        if (tab[1] == NULL)
-        {
-                while (envar->env_var && envar->env_var[i] != NULL)
-                {
-                        if (ft_printf("export %s\n", envar->env_var[i++]) == 0)
-                                return (EXIT_FAILURE);
-                }
-        }
-        else
-        {
-                int num_env_vars = 0;
-                while (envar->env_var[num_env_vars] != NULL)
-                        num_env_vars++;
-                char *new_env_var = malloc(strlen(tab[1]) + 1);
-                if (new_env_var == NULL)
-                {
-                        printf("Erreur lors de l'allocation de mémoire.\n");
-                        return (EXIT_FAILURE);
-                }
-                strcpy(new_env_var, tab[1]);
-                char **new_env_var_list = realloc(envar->env_var, (num_env_vars + 2) * sizeof(char *));
-                if (new_env_var_list == NULL)
-                {
-                        printf("Erreur lors de l'allocation de mémoire.\n");
-                        free(new_env_var);
-                        return (EXIT_FAILURE);
-                }
-                new_env_var_list[num_env_vars] = new_env_var;
-                new_env_var_list[num_env_vars + 1] = NULL;
-                envar->env_var = new_env_var_list;
-        }
+	if (j == 0)
+	{
+		while (envar->env_var && envar->env_var[i] != NULL)
+		{
+			if (ft_printf("export %s\n", envar->env_var[i++]) == 0)
+				return (EXIT_FAILURE);
+		}
+	}
+	i = 1;
+        while (i <= j)
+	{
+		if (tab[i] == NULL)
+			printf ("export: `': not a valid identifier\n");
+		else
+		{
+			int num_env_vars = 0;
+               		while (envar->env_var[num_env_vars] != NULL)
+                       		num_env_vars++;
+                	char *new_env_var = malloc(strlen(tab[i]) + 1);
+                	if (new_env_var == NULL)
+                	{
+                       		printf("Erreur lors de l'allocation de mémoire.\n");
+                       		return (EXIT_FAILURE);
+                	}
+                	strcpy(new_env_var, tab[i]);
+                	char **new_env_var_list = realloc(envar->env_var, (num_env_vars + 2) * sizeof(char *));
+                	if (new_env_var_list == NULL)
+                	{
+                       		printf("Erreur lors de l'allocation de mémoire.\n");
+                       		free(new_env_var);
+				return (EXIT_FAILURE);
+                	}
+                	new_env_var_list[num_env_vars] = new_env_var;
+                	new_env_var_list[num_env_vars + 1] = NULL;
+                	envar->env_var = new_env_var_list;
+		}
+		i++;
+	}
         return (EXIT_SUCCESS);
 }

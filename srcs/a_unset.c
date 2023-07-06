@@ -68,11 +68,13 @@ int	commande_unset(char **tab)
 {
         int             i;
         int             j;
+	int		count;
+	int		for_exit;
         int             out;
         t_env   *envar;
 
         envar = get_envar();
-        if (tab[1] == NULL)
+	if (tab[1] == NULL)
                 return (EXIT_SUCCESS);
         j = 0;
         if (tab[1][0] >= '0' && tab[1][0] <= '9')
@@ -80,27 +82,47 @@ int	commande_unset(char **tab)
                 printf ("export: `%s': not a valid identifier\n", tab[1]);
                 return (EXIT_FAILURE);
         }
-        while (tab[1][j])
-        {
-                if ((tab[1][j] >= 'A' && tab[1][j] <= 'Z') || (tab[1][j] >= 'a' && tab[1][j] <= 'z')  || (tab[1][j] >= '0' && tab[1][j] <= '9'))
-                        j++;
-                else if (tab[1][j] == '!')
-                {
-                        i = j;
-                        while (tab[1][i])
-                        {
-                                printf ("%c", tab[1][i]);
-                                i++;
-                        }
-                        printf (": event not found\n");
-                        return (EXIT_FAILURE);
-                }
-                else
-                {
-                        printf ("export: `%s': not a valid identifier\n", tab[1]);
-                        return (EXIT_FAILURE);
-                }
-        }
+	count = 1;
+	for_exit = 0;
+	while (tab[count] != NULL)
+	{
+		j = 0;
+		if (tab[count][j] == '-')
+		{
+			printf ("unset: -%c: invalid option\n", tab[count][j + 1]);
+			return (EXIT_FAILURE);
+		}
+        	while (tab[count][j])
+        	{
+                	if (tab[count][j] == '_' || (tab[count][j] >= 'A' && tab[count][j] <= 'Z') || (tab[count][j] >= 'a' && tab[count][j] <= 'z')  || (tab[count][j] >= '0' && tab[count][j] <= '9'))
+                        	j++;
+                	else if (tab[count][j] == '!')
+                	{
+                        	i = j;
+                        	while (tab[count][i])
+                        	{
+                                	printf ("%c", tab[count][i]);
+                               	 	i++;
+                        	}
+                        	printf (": event not found\n");
+                        	return (EXIT_FAILURE);
+                	}
+                	else
+                	{
+                        	printf ("export: `%s': not a valid identifier\n", tab[count]);
+                        	for_exit = 1;
+				j++;
+                	}
+        	}
+		count++;
+	}
+	if (for_exit == 1)
+		return (EXIT_FAILURE);
+	if (tab[1] != NULL && (tab[1][0] <= '!' || tab[1][0] >= '}'))
+	{
+		printf ("unset: `': not a valid identifier\n");
+		return (EXIT_FAILURE);
+	}
         j = 1;
         while (tab[j])
         {
