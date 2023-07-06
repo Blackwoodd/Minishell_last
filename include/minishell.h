@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/04 15:26:35 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/06 14:56:23 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int			commande_cd(char **word);
 int			commande_env(char **env);
 int			commande_export(char **env);
 int			commande_unset(char **tab);
-int			commande_exit(char **tab, t_exp_tok *exp_tok);
+int			commande_exit(char **tab, t_exp_tok *exp_tok, t_exp_tok **exp_toks);
 
 //////////// verif_synthax.c ////////////////////
 
@@ -268,7 +268,7 @@ int			clean_quote_exp_tok_cmd(t_exp_tok *exp_tok);
 bool		is_builtin(char *cmd);
 int			init_path(char **path_splitted[]);
 char		*get_abs_cmd_path(char *path_splitted, char *cmd);
-int			ft_execute(t_exp_tok *exp_tok);
+int			ft_execute(t_exp_tok *exp_tok, t_exp_tok **exp_toks);
 
 ///////////////// parser.c //////////////////////////
 
@@ -293,13 +293,13 @@ void		global_signal(void);
 ////////////////// ft_execute_utils_bis.c ///////////
 
 int			execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status);
-int			execute_builtin(t_exp_tok *exp_tok);
+int			execute_builtin(t_exp_tok *exp_tok, t_exp_tok **exp_toks);
 int			execute_builtin_child(t_exp_tok *exp_tok);
 int			exbuiltin_reset_fd(t_exp_tok *exp_tok, int pipes_save[2]);
 
 //////////////// ft_execute_utils.c ////////////////
 
-int			handle_builtin_redirection(t_exp_tok *exp_tok);
+int			handle_builtin_redirection(t_exp_tok *exp_tok, t_exp_tok **exp_toks);
 
 ////////////////// handle_pipe.c //////////////////
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute_utils.c                                 :+:      :+:    :+:   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:30:43 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 16:32:44 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:51:47 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	handle_builtin_redirection(t_exp_tok *exp_tok)
+int	handle_builtin_redirection(t_exp_tok *exp_tok, t_exp_tok **exp_toks)
 {
 	int	exit_status;
 	int	pipes_save[2];
@@ -36,7 +36,7 @@ int	handle_builtin_redirection(t_exp_tok *exp_tok)
 	if (exp_tok->is_pipe == true)
 		exit_status = execute_builtin_child(exp_tok);
 	else
-		exit_status = execute_builtin(exp_tok);
+		exit_status = execute_builtin(exp_tok, exp_toks);
 	exbuiltin_reset_fd(exp_tok, pipes_save);
 	return (exit_status);
 }

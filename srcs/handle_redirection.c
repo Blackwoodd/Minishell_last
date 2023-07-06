@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:56:51 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/14 16:40:23 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:59:25 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type)
 		exp_tok->is_pipe = false;
 	if (par_tok->type == subshell)
 		return (execute_subshell(exp_tok));
-	exit_status = ft_execute(exp_tok);
+	exit_status = ft_execute(exp_tok, NULL);
 	if (exp_tok->in != STDIN_FILENO)
 		close(exp_tok->in);
 	if (exp_tok->out != STDOUT_FILENO)

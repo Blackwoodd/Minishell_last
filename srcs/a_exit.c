@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:07:35 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/04 18:58:32 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/06 14:56:56 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_error_arg(void)
 	ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
 }
 
-int	commande_exit(char **tab, t_exp_tok *exp_tok)
+int	commande_exit(char **tab, t_exp_tok *exp_tok, t_exp_tok **exp_toks)
 {
 	long		exit_code;
 	t_env		*envar;
@@ -71,6 +71,8 @@ int	commande_exit(char **tab, t_exp_tok *exp_tok)
 	ft_free_tab(tab);
 	if (exp_tok != NULL)
 		free(exp_tok);
+	if (exp_toks != NULL)
+		free(exp_toks);
 	free_pars_token(par_tok, 0);
 	exit(exit_code);
 	return (exit_code);

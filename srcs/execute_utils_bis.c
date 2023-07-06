@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:28:39 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/04 15:27:13 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/06 14:58:57 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	 execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
 	return (status);
 }
 
-int	execute_builtin(t_exp_tok *exp_tok)
+int	execute_builtin(t_exp_tok *exp_tok, t_exp_tok **exp_toks)
 {
 	if (ft_strcmp(exp_tok->cmd[0], "echo") == 0)
 		return (commande_echo(exp_tok->cmd));
@@ -97,7 +97,7 @@ int	execute_builtin(t_exp_tok *exp_tok)
 	if (ft_strcmp(exp_tok->cmd[0], "unset") == 0)
 		return (commande_unset(exp_tok->cmd));
 	if (ft_strcmp(exp_tok->cmd[0], "exit") == 0)
-		return (commande_exit(exp_tok->cmd, exp_tok));
+		return (commande_exit(exp_tok->cmd, exp_tok, exp_toks));
 	return (EXIT_FAILURE);
 }
 
@@ -144,7 +144,7 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
 		return (EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		exit_status = execute_builtin(exp_tok);
+		exit_status = execute_builtin(exp_tok, NULL);
 		exit(exit_status);
 		return (exit_status);
 	}

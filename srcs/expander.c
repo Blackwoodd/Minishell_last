@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:01:00 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/04 15:45:44 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/06 14:49:50 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static int	process_express_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 			set_err_code(handle_redir(par_toks[i], exp_toks[i], \
 			set_pipe_type(par_toks, i)));
 		else if (exp_toks[i]->cmd != NULL)
-			set_err_code(ft_execute(exp_toks[i]));
+			set_err_code(ft_execute(exp_toks[i], exp_toks));
 		i++;
 	}
 	return (EXIT_SUCCESS);
