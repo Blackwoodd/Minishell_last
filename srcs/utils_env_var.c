@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:05:52 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/07 12:36:02 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:14:57 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ t_env	*init_envar(char **envp)
 		envar->env_var = ft_str_arr_dup(envp);
 		envar->pwd = get_env_var_val(envar, "PWD");
 		envar->oldpwd = get_env_var_val(envar,"OLDPWD");
-		envar->tmp_var = ft_calloc(1, 1);
+		envar->tmp_var = ft_calloc(1, sizeof(char*));
 		if (envar->env_var != NULL && envar->pwd != NULL && envar->oldpwd != NULL)
 			return (envar);
 	}
