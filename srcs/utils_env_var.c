@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:05:52 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/07 15:14:57 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/07 20:26:44 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ char    *get_env_var_val(t_env *envar, char *var)
 				break;
 			}
 		}
+	}
+	if (value == NULL)
+	{
+		value = ft_calloc(1, sizeof(char));
+		value[0] = '\0';
 	}
 	get_env_var_valnorm(envar, var, &value, i);
 	return (value);
