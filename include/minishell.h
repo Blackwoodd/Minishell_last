@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/06 14:56:23 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/07 12:15:30 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_env
 	char	**env_var;
 	char	*pwd;
 	char	*oldpwd;
+	char 	**tmp_var;
 }			t_env;
 
 typedef enum e_iterator
@@ -96,6 +97,7 @@ typedef struct s_expander_tokens
 	int				in;
 	int				out;
 	bool			is_pipe;
+	int				*pids;
 }	t_exp_tok;
 
 //////////////////// strucure-quote  //////////////
