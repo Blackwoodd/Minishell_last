@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/07 15:07:22 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/07 21:04:52 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,8 @@ void	create_var(char **token)
 		if (verif_create_var(token[i]))
 		{
 			implem_var(token[i]);
-			ft_free_single_str(&token, i);
+			if (i == 0)
+				ft_free_single_str(&token, i);
 			count = 1;
 		}
 		i++;
