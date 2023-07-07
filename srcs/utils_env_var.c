@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 10:05:52 by nassm             #+#    #+#             */
-/*   Updated: 2023/06/21 17:01:38 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/07 12:36:02 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ char    *get_env_var_val(t_env *envar, char *var)
 {
 	int		i;
 	char	*value;
+	int		len;
 
 	i = 0;
+	len = ft_str_arr_len(envar->env_var);
 	value = NULL;
 	while (envar && envar->env_var && envar->env_var[i] != NULL)
 	{
@@ -120,6 +122,27 @@ char    *get_env_var_val(t_env *envar, char *var)
 		{
 			value = ft_calloc(1, sizeof(char));
 			break;
+		}
+	}
+	if (i == len)
+	{
+		i = 0;
+		while (envar && envar->tmp_var && envar->tmp_var[i] != NULL)
+		{
+			if (ft_strcmp(var, envar->tmp_var[i]) == -61)
+			{
+				value = ft_strchr(envar->tmp_var[i++], '=') + 1;
+				if (ft_strlen(value) == 0)
+					value = ft_calloc(1, sizeof(char));
+				else
+					value = ft_strdup(value);
+				break;
+			}
+			else if (ft_strcmp(var, envar->tmp_var[i++]) == 0)
+			{
+				value = ft_calloc(1, sizeof(char));
+				break;
+			}
 		}
 	}
 	get_env_var_valnorm(envar, var, &value, i);
@@ -142,6 +165,7 @@ t_env	*init_envar(char **envp)
 		envar->env_var = ft_str_arr_dup(envp);
 		envar->pwd = get_env_var_val(envar, "PWD");
 		envar->oldpwd = get_env_var_val(envar,"OLDPWD");
+		envar->tmp_var = ft_calloc(1, 1);
 		if (envar->env_var != NULL && envar->pwd != NULL && envar->oldpwd != NULL)
 			return (envar);
 	}
@@ -161,6 +185,8 @@ void	free_envar(t_env *envar)
 		free(envar->pwd);
 	if (envar->oldpwd)
 		free(envar->oldpwd);
+	if (envar->tmp_var)
+		ft_free_str_array(&envar->tmp_var);
 	if (envar)
 		free(envar);
 }

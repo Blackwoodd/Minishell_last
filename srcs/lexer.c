@@ -6,7 +6,7 @@
 /*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/04 16:05:35 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:07:22 by nassm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,68 @@ char	**resize_token(char **token)
 	return (resized);
 }
 
+bool	verif_create_var(char *token)
+{
+	int	i;
+	int len;
+
+	len = ft_strlen(token);
+	i = 0;
+	while (token[i] && i < len)
+	{
+		 if ((token[i] >= 'A' && token[i] <= 'Z') || (token[i] >= 'a' && token[i] <= 'z') \
+		 || (token[i] >= '0' && token[i] <= '9'))
+		 	i++;
+		else
+			break;
+	}
+	if (token[i] != '=')
+		return (false);
+	else
+		i++;
+	if (token[i] != '\0' && token[i] != ' ' && token[i] != '\t')
+		return (true);
+	else
+		return (false);
+}
+
+void	implem_var(char *token)
+{
+	t_env	*envar;
+	int		i;
+	
+	
+	envar = get_envar();
+	i = ft_str_arr_len(envar->tmp_var);
+	ft_add_str_to_tab(&envar->tmp_var, i + 1, token);
+}
+
+void	create_var(char **token)
+{
+	int i;
+	int	len;
+	int	count;
+	
+	i = 0;
+	count = 0;
+	len = ft_str_arr_len(token);
+	while (token[i] && i < len)
+	{
+		if (verif_create_var(token[i]))
+		{
+			implem_var(token[i]);
+			ft_free_single_str(&token, i);
+			count = 1;
+		}
+		i++;
+	}
+	if (i == 1 && count == 1)
+	{
+		ft_free_str_array(&token);
+		core();
+	}
+}
+
 int lexer(char  *rline)
 {
 	char	**token;
@@ -208,6 +270,7 @@ int lexer(char  *rline)
 	if (token == NULL)
 		return (EXIT_FAILURE);
 	set_lex_token(token);
+	create_var(token);
 	if (!valid_syntax_token(token))
 		return (exit_syntax_error());
 	exit_status = parser(token);
