@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:59:33 by nbechon           #+#    #+#             */
-/*   Updated: 2023/06/15 14:28:05 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/11 14:18:44 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,25 @@ static void	handle_cmd_signal(int sig)
 	}
 }
 
+static bool	first_ctrl_c = true;
+
 static void	handle_global_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
 		set_err_code(1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
-		write(1, "^C\n", 3);
+		if (first_ctrl_c)
+		{
+			write(1, "^C\n", 3);
+			first_ctrl_c = false;
+		}
+		else
+		{
+			write(1, "^C\n", 4);
+			first_ctrl_c = true;
+		}
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
