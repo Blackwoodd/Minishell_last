@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:34:20 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/11 14:18:33 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/12 15:08:27 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	verif_export_valid(char **tab, int count)
 
 int	commande_export(char **tab)
 {
+	int			num_env_vars;
+	int			env_var_index;
 	int			count;
 	int			i;
 	int			j;
@@ -141,8 +143,8 @@ int	commande_export(char **tab)
 			printf("export: `': not a valid identifier\n");
 		else
 		{
-			int num_env_vars = 0;
-			int env_var_index = -1;
+			num_env_vars = 0;
+			env_var_index = -1;
 			while (envar->env_var[num_env_vars] != NULL)
 			{
 				char* equal_sign = strchr(envar->env_var[num_env_vars], '=');

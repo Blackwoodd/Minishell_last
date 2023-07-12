@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:39:21 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/07 20:21:58 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/12 15:07:16 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 int	get_pars_tok(char *lex_tok[], t_par_tok *pars_tok[], t_iter *iter)
 {
 	int	tmp;
-	
+
 	tmp = EXIT_SUCCESS;
 	tmp = get_token_type(lex_tok[iter[lex]], iter);
 	if (tmp != EXIT_SUCCESS)

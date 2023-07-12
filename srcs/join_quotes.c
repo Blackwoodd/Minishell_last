@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:09:47 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/03 15:13:39 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/12 15:07:47 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,11 +354,11 @@ char	*utils_core_jquote(char *token)
 
 bool	count_quote(char *token)
 {
-	int i;
+	int	i;
 	int	j;
 	int	k;
-	int count;
-	
+	int	count;
+
 	i = 0;
 	j = 0;
 	k = 0;
@@ -493,8 +493,8 @@ bool	check_if_var(char *str)
 {
 	char	*tmp;
 	int		i;
-	int 	j;
-	
+	int		j;
+
 	i = 0;
 	while (str[i] != '$')
 		i++;
@@ -502,7 +502,7 @@ bool	check_if_var(char *str)
 	while (str[j] != '\"')
 		j++;
 	tmp = strndup(&str[i], j - i);
-	tmp = get_env_variable(str,get_var(str));
+	tmp = get_env_variable(str, get_var(str));
 	i = 0;
 	while (tmp[i])
 	{
@@ -521,7 +521,7 @@ bool	check_if_var_bis(char *str)
 {
 	char	*tmp;
 	int		i;
-	int 	j;
+	int		j;
 
 	i = 0;
 	while (str[i] != '$')
@@ -530,7 +530,7 @@ bool	check_if_var_bis(char *str)
 	while (str[j] && (str[j] != '\"' && str[j] != '\''))
 		j++;
 	tmp = strndup(&str[i], j - i);
-	tmp = get_env_variable(str,get_var(str));
+	tmp = get_env_variable(str, get_var(str));
 	i = 0;
 	if (tmp == NULL || ft_strlen(tmp) == 0)
 	{
@@ -550,34 +550,41 @@ bool	check_if_var_bis(char *str)
 	return (true);
 }
 
-void handle_quote(char *str) {
-    int i, j;
+void	handle_quote(char *str)
+{
+	int	i;
+	int	j;
 	int	len;
-    int nested_single = 0;
-    int nested_double = 0;
+	int	nested_single;
+	int	nested_double;
 
-    i = j = 0;
+	nested_double = 0;
+	nested_double = 0;
+	i = 0;
+	j = 0;
 	len = ft_strlen(str);
     // Count quotes and check if they are balanced
-    for (i = 0; str[i]; i++) {
-        if (str[i] == '\'') {
-            nested_single++;
-        } else if (str[i] == '\"') {
-            nested_double++;
-        }
-    }
-
-    // Handle quotes
-    i = 0;
-    while (str[i] && i < len)
+	while (str[i])
 	{
-        if (str[i] == '\'')
+		if (str[i] == '\'')
+			nested_single++;
+		else if (str[i] == '\"')
 		{
-            i++;
-            while (str[i] && str[i] != '\'')
+			nested_double++;
+		}
+		i++;
+	}
+    // Handle quotes
+	i = 0;
+	while (str[i] && i < len)
+	{
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
 			{
-                if (str[i] == '\"')
-                    nested_double++;
+				if (str[i] == '\"')
+					nested_double++;
 				if (str[i] == '$' && (str[i +1] != '\'' || str[i + 1] != '\"'))
 				{
 					str[j++] = '\016';
@@ -603,7 +610,7 @@ void handle_quote(char *str) {
 					str[j] = '\016';
 					j++;
 				}
-				if (str[i] ==  '$')
+				if (str[i] == '$')
 				{
 					if (check_if_var(&str[j]) == false)
 					{
@@ -613,14 +620,13 @@ void handle_quote(char *str) {
 				}
 				if (str[i] != '\"')
 					str[j++] = str[i++];
-				
 			}
 			if (str[i] == '\"')
 				i++;
 		}
 		if (str[i] == '$' && str[i +1] == '\'')
 			i++;
-		if (str[i] ==  '$')
+		if (str[i] == '$')
 		{
 			if (check_if_var_bis(&str[j]) == false)
 			{
@@ -634,10 +640,10 @@ void handle_quote(char *str) {
 			str[j++] = str[i++];
 	}
     // Null-terminate the modified string
-    str[j] = '\0';
+	str[j] = '\0';
 }
 
-int    core_jquote(char *token)
+int	core_jquote(char *token)
 {
 // 	if (count_quote(token) == true)
 // 	{

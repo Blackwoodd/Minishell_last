@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:59:10 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/07 21:04:52 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/12 14:51:33 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,17 +194,18 @@ char	**resize_token(char **token)
 bool	verif_create_var(char *token)
 {
 	int	i;
-	int len;
+	int	len;
 
 	len = ft_strlen(token);
 	i = 0;
 	while (token[i] && i < len)
 	{
-		 if ((token[i] >= 'A' && token[i] <= 'Z') || (token[i] >= 'a' && token[i] <= 'z') \
-		 || (token[i] >= '0' && token[i] <= '9'))
-		 	i++;
+		if ((token[i] >= 'A' && token[i] <= 'Z')
+			|| (token[i] >= 'a' && token[i] <= 'z')
+			|| (token[i] >= '0' && token[i] <= '9'))
+			i++;
 		else
-			break;
+			break ;
 	}
 	if (token[i] != '=')
 		return (false);
@@ -220,8 +221,7 @@ void	implem_var(char *token)
 {
 	t_env	*envar;
 	int		i;
-	
-	
+
 	envar = get_envar();
 	i = ft_str_arr_len(envar->tmp_var);
 	ft_add_str_to_tab(&envar->tmp_var, i + 1, token);
@@ -229,10 +229,10 @@ void	implem_var(char *token)
 
 void	create_var(char **token)
 {
-	int i;
+	int	i;
 	int	len;
 	int	count;
-	
+
 	i = 0;
 	count = 0;
 	len = ft_str_arr_len(token);

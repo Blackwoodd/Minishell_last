@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils_bis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:28:39 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/06 16:15:12 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/12 15:05:05 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 	since the process exits before reaching it.
 */
 
-int	 execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
+int	execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
 {
 	int		s;
 

@@ -3,31 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:15 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/06 15:00:34 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/12 14:52:04 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+// static int	exit_core(void *to_free, int exit_status)
+// {
+// 	char	**args;
+
+// 	if (exit_status == EXIT_CTRL_D)
+// 	{
+// 		args = ft_calloc(3, sizeof(args));
+// 		args[0] = ft_strdup("exit");
+// 		args[1] = ft_itoa(get_err_code());
+// 		commande_exit(args, NULL, NULL);
+// 		ft_free_split(args);
+// 	}
+// 	rl_clear_history();
+// 	free(to_free);
+// 	free_envar(get_envar());
+// 	return (exit_status);
+// }
+
 static int	exit_core(void *to_free, int exit_status)
 {
-	//char	**args;
-
 	if (exit_status == EXIT_CTRL_D)
-	{
 		printf ("exit\n");
-	//	args = ft_calloc(3, sizeof(args));
-	//	args[0] = ft_strdup("exit");
-	//	args[1] = ft_itoa(get_err_code());
-	//	commande_exit(args, NULL, NULL);
-	//	ft_free_split(args);
-	}
 	rl_clear_history();
 	free(to_free);
-	free_envar(get_envar());
 	return (exit_status);
 }
 
@@ -94,8 +102,6 @@ static int	hide_ctrl_c(void)
 	free(stty);
 	return (EXIT_SUCCESS);
 }
-
-
 
 int	main(int ac, char **av, char **envp)
 {

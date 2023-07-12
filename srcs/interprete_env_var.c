@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interprete_env_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 09:56:51 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/07 15:53:38 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/12 14:55:28 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,11 @@ char	*get_var(char *lex_tok)
 	* If none of the above conditions are met, it simply returns the result_token.
 */
 
-int count_$(char *str)
+int	count_dolar(char *str)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
-	
 	i = 0;
 	count = 0;
 	while (str[i])
@@ -160,7 +159,7 @@ int count_$(char *str)
 			count++;
 		i++;
 	}
-	return(count);
+	return (count);
 }
 
 char	*interpret_env_var(char *lex_token)
@@ -168,14 +167,14 @@ char	*interpret_env_var(char *lex_token)
 	char	*result_token;
 	int		i;
 	int		count;
-	
+
 	i = 0;
 	result_token = lex_token;
-	count = count_$(lex_token);
+	count = count_dolar(lex_token);
 	while (ft_strchr(&lex_token[i], '$') && count > 0)
 	{
 		if (lex_token[i] != '\016' && ft_strlen(lex_token) > 1
-				&& ft_strchr(lex_token, '$') && !ft_strchr(lex_token, '\016'))
+			&& ft_strchr(lex_token, '$') && !ft_strchr(lex_token, '\016'))
 		{
 			if (ft_strstr(lex_token, "$?"))
 			{
@@ -187,7 +186,7 @@ char	*interpret_env_var(char *lex_token)
 			return (result_token);
 		}
 		if (!ft_strchr(lex_token, '\'') && !ft_strchr(lex_token, '\"')
-				&& ft_strcmp(lex_token, "*\0") == 0)
+			&& ft_strcmp(lex_token, "*\0") == 0)
 		{
 			free(lex_token);
 			return (get_directory_items());

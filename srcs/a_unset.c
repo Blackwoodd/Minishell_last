@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:16:05 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/11 13:35:16 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/12 14:56:36 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	verif_unset(char *tab)
 	}
 	while (tab[j])
 	{
-		if (tab[j] == '_' || (tab[j] >= 'A' && tab[j] <= 'Z') || (tab[j] >= 'a' && tab[j] <= 'z')  || (tab[j] >= '0' && tab[j] <= '9'))
+		if (tab[j] == '_' || (tab[j] >= 'A' && tab[j] <= 'Z')
+			|| (tab[j] >= 'a' && tab[j] <= 'z')
+			|| (tab[j] >= '0' && tab[j] <= '9'))
 			j++;
 		else if (tab[j] == '!')
 		{
