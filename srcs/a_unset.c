@@ -130,10 +130,7 @@ int	commande_unset(char **tab)
 	if (for_exit == 1)
 		return (EXIT_FAILURE);
 	if (tab[1] != NULL && (tab[1][0] <= '!' || tab[1][0] >= '}'))
-	{
 		printf ("unset: `': not a valid identifier\n");
-		return (EXIT_FAILURE);
-	}
 	j = 1;
 	while (tab[j])
 	{

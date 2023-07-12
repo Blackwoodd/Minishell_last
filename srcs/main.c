@@ -14,15 +14,16 @@
 
 static int	exit_core(void *to_free, int exit_status)
 {
-	char	**args;
+	//char	**args;
 
 	if (exit_status == EXIT_CTRL_D)
 	{
-		args = ft_calloc(3, sizeof(args));
-		args[0] = ft_strdup("exit");
-		args[1] = ft_itoa(get_err_code());
-		commande_exit(args, NULL, NULL);
-		ft_free_split(args);
+		printf ("exit\n");
+	//	args = ft_calloc(3, sizeof(args));
+	//	args[0] = ft_strdup("exit");
+	//	args[1] = ft_itoa(get_err_code());
+	//	commande_exit(args, NULL, NULL);
+	//	ft_free_split(args);
 	}
 	rl_clear_history();
 	free(to_free);
@@ -38,10 +39,10 @@ int	core(void)
 	while (true)
 	{
 		buff = readline("minishell$ ");
-		if (ft_strlen(buff) > 0)
-			add_history(buff);
 		if (buff == NULL)
 			return (exit_core((void *)buff, EXIT_CTRL_D));
+		if (ft_strlen(buff) > 0)
+			add_history(buff);
 		exit_code = lexer(buff);
 		if (exit_code == EXIT_FAILURE)
 			return (exit_core((void *)buff, EXIT_FAILURE));
