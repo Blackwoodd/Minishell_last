@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:16:05 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/12 14:56:36 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/12 15:30:57 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,11 @@ static int	norm_unset(char **tab, t_env *envar, int i, int j)
 
 int	verif_unset(char *tab)
 {
-	int	i;
 	int	j;
 
 	j = 0;
 	if (tab[j] == '-')
-	{
-		printf ("unset: -%c: invalid option\n", tab[j + 1]);
-		return (1);
-	}
+		return (printf ("unset: -%c: invalid option\n", tab[j + 1]), 1);
 	while (tab[j])
 	{
 		if (tab[j] == '_' || (tab[j] >= 'A' && tab[j] <= 'Z')
@@ -83,21 +79,15 @@ int	verif_unset(char *tab)
 			j++;
 		else if (tab[j] == '!')
 		{
-			i = j;
-			while (tab[i])
+			while (tab[j])
 			{
-				printf ("%c", tab[i]);
-				i++;
+				printf ("%c", tab[j]);
+				j++;
 			}
-			printf (": event not found\n");
-			return (1);
+			return (printf (": event not found\n"), 1);
 		}
 		else
-		{
-			printf ("export: `%s': not a valid identifier\n", tab);
-			return (0);
-			j++;
-		}
+			return (printf ("export: `%s': not a valid identifier\n", tab), 0);
 	}
 	return (0);
 }

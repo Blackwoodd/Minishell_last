@@ -6,7 +6,7 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:34:20 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/12 15:08:27 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/12 15:40:59 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ int	verif_event(char **tab, int count)
 	return (0);
 }
 
-int	verif_export_valid(char **tab, int count)
+int	verif_export_valid(char **tab, int count, int i)
 {
-	int	i;
 	int	j;
 
 	j = 1;
@@ -65,23 +64,18 @@ int	verif_export_valid(char **tab, int count)
 		if (tab[j] == NULL)
 			j++;
 		else if (tab[j][0] == '=' || (tab[j][0] >= '0' && tab[j][0] <= '9'))
-		{
-			printf ("export: `%s': not a valid identifier\n", tab[j]);
-			return (1);
-		}
-		while (tab[j][i] != '=')
+			return (printf("export: `%s': not a valid identifier\n", tab[j]), 1);
+		while (tab[j][i] != '=' )
 		{
 			if (tab[j][i] == '\0')
-				break ;
-			else if ((tab[j][i] >= 'A' && tab[j][i] <= 'Z')
+				return (1);
+			if ((tab[j][i] >= 'A' && tab[j][i] <= 'Z')
 				|| (tab[j][i] >= 'a' && tab[j][i] <= 'z')
 				|| (tab[j][i] >= '0' && tab[j][i] <= '9'))
 				i++;
 			else
-			{
-				printf ("export: `%s': not a valid identifier\n", tab[j]);
-				return (1);
-			}
+				return (printf("export: `%s': not a valid identifier\n",
+						tab[j]), 1);
 		}
 		j++;
 	}
@@ -96,6 +90,9 @@ int	commande_export(char **tab)
 	int			i;
 	int			j;
 	t_env		*envar;
+	char 		**new_env_var_list;
+	char 		*new_env_var;
+	char		*equal_sign;
 
 	count = 0;
 	j = 1;
@@ -126,7 +123,7 @@ int	commande_export(char **tab)
 		printf ("export: %s: not a valid identifier\n", tab[2]);
 		return (EXIT_FAILURE);
 	}
-	if (verif_export_valid(tab, j) == 1)
+	if (verif_export_valid(tab, j, 0) == 1)
 		return (EXIT_FAILURE);
 	if (j == 0)
 	{
@@ -147,22 +144,23 @@ int	commande_export(char **tab)
 			env_var_index = -1;
 			while (envar->env_var[num_env_vars] != NULL)
 			{
-				char* equal_sign = strchr(envar->env_var[num_env_vars], '=');
-				if (equal_sign != NULL && strncmp(envar->env_var[num_env_vars], tab[i], equal_sign - envar->env_var[num_env_vars]) == 0)
+				equal_sign = strchr(envar->env_var[num_env_vars], '=');
+				if (equal_sign != NULL && strncmp
+					(envar->env_var[num_env_vars], tab[i],
+						equal_sign - envar->env_var[num_env_vars]) == 0)
 				{
 					env_var_index = num_env_vars;
 					break ;
 				}
 				num_env_vars++;
 			}
-			char *new_env_var = malloc(strlen(tab[i]) + 1);
+			new_env_var = malloc(strlen(tab[i]) + 1);
 			if (new_env_var == NULL)
 			{
 				printf("Erreur lors de l'allocation de mémoire.\n");
 				return (EXIT_FAILURE);
 			}
 			strcpy(new_env_var, tab[i]);
-			char **new_env_var_list;
 			if (env_var_index != -1)
 			{
 				free(envar->env_var[env_var_index]);
@@ -171,7 +169,8 @@ int	commande_export(char **tab)
 			}
 			else
 			{
-				new_env_var_list = realloc(envar->env_var, (num_env_vars + 2) * sizeof(char *));
+				new_env_var_list = realloc(envar->env_var,
+						(num_env_vars + 2) * sizeof(char *));
 				if (new_env_var_list == NULL)
 				{
 					printf ("Erreur lors de l'allocation de memoire.\n");
