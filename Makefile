@@ -17,7 +17,7 @@ PATH_OBJS	= objs/
 OBJS		= $(patsubst $(PATH_SRCS)/%.c, $(PATH_OBJS)/%.o, $(SRCS))
 RM			= @rm -f
 CC			= @gcc
-CFLAGS		= -Wall -Wextra -Werror -g3 -lreadline
+CFLAGS		= -Wall -Wextra -Werror -g3 -lreadline -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include
 
 ############ REGLES #############
 

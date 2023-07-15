@@ -555,25 +555,12 @@ void	handle_quote(char *str)
 	int	i;
 	int	j;
 	int	len;
-	int	nested_single;
-	int	nested_double;
 
-	nested_double = 0;
-	nested_double = 0;
 	i = 0;
 	j = 0;
 	len = ft_strlen(str);
     // Count quotes and check if they are balanced
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			nested_single++;
-		else if (str[i] == '\"')
-		{
-			nested_double++;
-		}
-		i++;
-	}
+
     // Handle quotes
 	i = 0;
 	while (str[i] && i < len)
@@ -583,8 +570,6 @@ void	handle_quote(char *str)
 			i++;
 			while (str[i] && str[i] != '\'')
 			{
-				if (str[i] == '\"')
-					nested_double++;
 				if (str[i] == '$' && (str[i +1] != '\'' || str[i + 1] != '\"'))
 				{
 					str[j++] = '\016';
@@ -603,8 +588,6 @@ void	handle_quote(char *str)
 			i++;
 			while (str[i] && str[i] != '\"')
 			{
-				if (str[i] == '\'')
-					nested_single++;
 				if (str[i] == '$' && str[i + 1] == '\"')
 				{
 					str[j] = '\016';
