@@ -57,28 +57,20 @@
 static int	open_in(t_par_tok *par_token, t_exp_tok *exp_tok)
 {
 	int		i;
-	int		fd;
-	int		heredeoc_fd;
 
-	i = 0;
-	fd = 0;
-	if (exp_tok->in != STDIN_FILENO)
-		heredeoc_fd = exp_tok->in;
-	while (par_token->redir_type[is_in] || par_token->redir_type[is_in_heredoc])
+	if (par_token->redir_type == IS_IN)
 	{
-		if (ft_strncmp(par_token->in[i++], "<<", 2) != 0)
-			fd = open(par_token->in[i], O_RDONLY);
-		else if (par_token->redir_type[is_in_heredoc])
-			fd = heredeoc_fd;
-		if (fd == -1)
-			return (ft_perror(EXIT_FAILURE, "open error"));
-		if (par_token->in[i + 1] == NULL)
-			break ;
-		if (fd != heredeoc_fd && fd != 0 && fd != 1)
-			close(fd);
-		i++;
+			i = 0;
+			while (par_token->in[i])
+			{
+				if (exp_tok->in != 0)
+				{
+					close(exp_tok->in != 0);
+				}
+				exp_tok->in = open(par_token->in[i], O_RDONLY);
+				i++;
+			}
 	}
-	exp_tok->in = fd;
 	return (EXIT_SUCCESS);
 }
 

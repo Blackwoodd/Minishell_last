@@ -253,12 +253,12 @@ int	get_token_type(char *token, t_iter *iter)
 {
 	t_par_tok	*par_tok;
 
-	par_tok->redir_type = NONE;
 	if (token == NULL)
 		return (EXIT_SUCCESS);
 	if (init_current_pars_token() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	par_tok = get_current_par_token();
+	par_tok->redir_type = NONE;
 	if (ft_strlen(token) == 1)
 	{
 		if (ft_strchr(token, '|'))
