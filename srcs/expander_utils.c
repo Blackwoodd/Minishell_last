@@ -182,7 +182,7 @@ int	get_tokens(t_par_tok *par_toks[])
 			if (exp_toks[i]->cmd == NULL)
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
 		}
-		if (par_toks[i]->redir_type[is_in_heredoc])
+		if (par_toks[i]->redir_type == IS_IN_HEREDOC)
 			if (wait_for_heredoc(par_toks[i], exp_toks[i], NULL, NULL) == 1)
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
 		i++;

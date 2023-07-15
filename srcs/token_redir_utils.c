@@ -37,18 +37,18 @@ int	get_token_redir_type(char *token)
 	if (ft_strlen(token) == 1)
 	{
 		if (ft_strchr(token, '>'))
-			return (is_out);
+			return (IS_OUT);
 		if (ft_strchr(token, '<'))
-			return (is_in);
+			return (IS_IN);
 		if (ft_strchr(token, '|'))
-			return (is_pipe);
+			return (IS_PIPE);
 	}
 	if (ft_strlen(token) == 2)
 	{
 		if (ft_strstr(token, ">>"))
-			return (is_out_append);
+			return (IS_OUT_APPEND);
 		if (ft_strstr(token, "<<"))
-			return (is_in_heredoc);
+			return (IS_IN_HEREDOC);
 	}
 	return (0);
 }

@@ -62,18 +62,14 @@ int	execute_subshell(t_exp_tok *exp_tok)
 		free(cutted_cmd);
 		exit(get_err_code());
 	}
-	waitpid(pid, &status, 0);
+	// waitpid(pid, &status, 0);
 	set_err_code(WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
 }
 
 static bool	is_redir(t_par_tok *par_tok)
 {
-	if (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc] \
-	|| par_tok->redir_type[is_out] || par_tok->redir_type[is_out_append] \
-	|| par_tok->redir_type[is_pipe])
-		return (true);
-	return (false);
+	return (par_tok->redir_type != NONE);
 }
 
 /*
@@ -109,6 +105,7 @@ static bool	is_redir(t_par_tok *par_tok)
 static int	process_express_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 {
 	int	i;
+	int status;
 
 	i = 0;
 	while (exp_toks[i] && par_toks[i])
@@ -129,6 +126,30 @@ static int	process_express_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 			set_err_code(ft_execute(exp_toks[i], exp_toks));
 		i++;
 	}
+
+	i = 0;
+	while (exp_toks[i])
+	{
+		if (exp_toks[i]->in != 0)
+		{
+			close(exp_toks[i]->in);
+		}
+
+		if (exp_toks[i]->out != 1)
+		{
+			close(exp_toks[i]->out);
+		}
+		i++;
+	}
+
+
+	i = 0;
+	while (exp_toks[i])
+	{
+		waitpid(exp_toks[i]->pid, &status, 0);
+		i++;
+	}
+	
 	return (EXIT_SUCCESS);
 }
 

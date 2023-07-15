@@ -129,13 +129,13 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 
 	i = 0;
 	fd = 1;
-	while (par_token->redir_type[is_out]
-		|| par_token->redir_type[is_out_append])
+	while (par_token->redir_type == IS_OUT
+		|| par_token->redir_type == IS_OUT_APPEND)
 	{
-		if (par_token->redir_type[is_out]
+		if (par_token->redir_type == IS_OUT
 			&& ft_strcmp(par_token->out[i++], ">") == 0)
 			fd = open(par_token->out[i], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		else if (par_token->redir_type[is_out_append]
+		else if (par_token->redir_type == IS_OUT_APPEND
 			&& ft_strcmp(par_token->out[i++], ">>") == 0)
 			fd = open(par_token->out[i], O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
@@ -173,7 +173,7 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 	returns EXIT_FAILURE, indicating a failure in handling pipes,
 	it immediately returns EXIT_FAILURE.
     
-	*It checks the value of par_tok->redir_type[is_pipe].
+	*It checks the value of par_tok->redir_type == IS_PIPE.
 	If it is true, it sets exp_tok->is_pipe to true, indicating
 	that the command is part of a pipe. Otherwise, it sets
 	exp_tok->is_pipe to false.
@@ -197,7 +197,7 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 	*Finally, it returns the exit status of the executed command.
 */
 
-int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type)
+int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, t_pipe_type pipe_type)
 {
 	int	exit_status;
 
@@ -207,7 +207,7 @@ int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type)
 		return (EXIT_FAILURE);
 	if (handle_pipes(exp_tok, pipe_type) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (par_tok->redir_type[is_pipe] == true)
+	if (par_tok->redir_type == IS_PIPE)
 		exp_tok->is_pipe = true;
 	else
 		exp_tok->is_pipe = false;

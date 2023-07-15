@@ -40,30 +40,34 @@
 	it returns -1 indicating no pipe type.
 */
 
-int	set_pipe_type(t_par_tok **par_toks, int i)
+t_pipe_type	set_pipe_type(t_par_tok **par_toks, int i)
 {
-	int	pipe_type;
-
-	pipe_type = -1;
-	if (par_toks[i]->redir_type[is_pipe] == false)
-		return (pipe_type);
+	if (par_toks[i]->redir_type != IS_PIPE)
+		return (NOT_PIPE);
 	else if (i > 0)
 	{
-		if (par_toks[i - 1]->redir_type[is_pipe]
-			&& par_toks[i]->redir_type[is_pipe] && (par_toks[i + 1] == NULL
-				|| par_toks[i + 1]->redir_type[is_pipe] == false))
-			pipe_type = 0;
-		else if (par_toks[i - 1]->redir_type[is_pipe] == false
-			&& par_toks[i]->redir_type[is_pipe] && par_toks[i + 1] != NULL
-			&& par_toks[i + 1]->redir_type[is_pipe])
-			pipe_type = 1;
-		else if (par_toks[i - 1]->redir_type[is_pipe]
-			&& par_toks[i]->redir_type[is_pipe] && par_toks[i + 1] != NULL
-			&& par_toks[i + 1]->redir_type[is_pipe])
-			pipe_type = 2;
-	}
-	else if (par_toks[i]->redir_type[is_pipe] && par_toks[i + 1] != NULL
-		&& par_toks[i + 1]->redir_type[is_pipe])
-		pipe_type = 1;
-	return (pipe_type);
+		if (par_toks[i - 1]->redir_type == IS_PIPE &&
+			par_toks[i]->redir_type == IS_PIPE &&
+			(par_toks[i + 1] == NULL || par_toks[i + 1]->redir_type != IS_PIPE))
+			return END_PIPE;
+		else if (
+			par_toks[i - 1]->redir_type != IS_PIPE &&
+			par_toks[i]->redir_type == IS_PIPE &&
+			par_toks[i + 1] != NULL &&
+			par_toks[i + 1]->redir_type == IS_PIPE)
+			return START_PIPE;
+		else if (
+			par_toks[i - 1]->redir_type == IS_PIPE &&
+			par_toks[i]->redir_type == IS_PIPE &&
+			par_toks[i + 1] != NULL
+			&& par_toks[i + 1]->redir_type == IS_PIPE
+			)
+			return MIDDLE_PIPE;
+	} else if (
+		par_toks[i]->redir_type == IS_PIPE &&
+		par_toks[i + 1] != NULL &&
+		par_toks[i + 1]->redir_type == IS_PIPE
+		)
+		return START_PIPE;
+	return (NOT_PIPE);
 }

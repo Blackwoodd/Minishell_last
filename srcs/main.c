@@ -74,34 +74,34 @@ static int	manage_flags(int ac, char *av[])
 	return (exit_code);
 }
 
-static int	hide_ctrl_c(void)
-{
-	t_exp_tok	*stty;
+// static int	hide_ctrl_c(void)
+// {
+// 	t_exp_tok	*stty;
 
-	stty = malloc(sizeof(*stty));
-	if (stty == NULL)
-		return (EXIT_FAILURE);
-	stty->cmd = ft_calloc(3, sizeof(*stty->cmd));
-	if (stty->cmd == NULL)
-		return (EXIT_FAILURE);
-	stty->cmd[0] = ft_strdup("/bin/stty");
-	if (stty->cmd[0] == NULL)
-		return (EXIT_FAILURE);
-	stty->cmd[1] = ft_strdup("-echoctl");
-	if (stty->cmd[1] == NULL)
-		return (EXIT_FAILURE);
-	stty->in = STDIN_FILENO;
-	stty->out = STDOUT_FILENO;
-	if (ft_execute(stty, NULL) == EXIT_FAILURE)
-	{
-		ft_free_tab(stty->cmd);
-		free(stty);
-		return (EXIT_FAILURE);
-	}
-	ft_free_tab(stty->cmd);
-	free(stty);
-	return (EXIT_SUCCESS);
-}
+// 	stty = malloc(sizeof(*stty));
+// 	if (stty == NULL)
+// 		return (EXIT_FAILURE);
+// 	stty->cmd = ft_calloc(3, sizeof(*stty->cmd));
+// 	if (stty->cmd == NULL)
+// 		return (EXIT_FAILURE);
+// 	stty->cmd[0] = ft_strdup("/bin/stty");
+// 	if (stty->cmd[0] == NULL)
+// 		return (EXIT_FAILURE);
+// 	stty->cmd[1] = ft_strdup("-echoctl");
+// 	if (stty->cmd[1] == NULL)
+// 		return (EXIT_FAILURE);
+// 	stty->in = STDIN_FILENO;
+// 	stty->out = STDOUT_FILENO;
+// 	if (ft_execute(stty, NULL) == EXIT_FAILURE)
+// 	{
+// 		ft_free_tab(stty->cmd);
+// 		free(stty);
+// 		return (EXIT_FAILURE);
+// 	}
+// 	ft_free_tab(stty->cmd);
+// 	free(stty);
+// 	return (EXIT_SUCCESS);
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -113,8 +113,8 @@ int	main(int ac, char **av, char **envp)
 		return (EXIT_FAILURE);
 	set_envp(envp);
 	set_envar(envar);
-	if (hide_ctrl_c() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	// if (hide_ctrl_c() == EXIT_FAILURE)
+	// 	return (EXIT_FAILURE);
 	if (ac != 1)
 		return (manage_flags(ac, av));
 	if (core() == EXIT_FAILURE)

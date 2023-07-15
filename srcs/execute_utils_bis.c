@@ -56,29 +56,47 @@
 
 int	execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
 {
-	int		s;
+	// int		s;
 
-	if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
-		return (ft_perror(EXIT_FAILURE, "dup2 error"));
-	if (exp_tok->out != STDOUT_FILENO)
+	// if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
+	// 	return (ft_perror(EXIT_FAILURE, "dup2 error"));
+	// if (exp_tok->out != STDOUT_FILENO)
+	// {
+	// 	s = dup(STDOUT_FILENO);
+	// 	if (s == -1 || dup2(exp_tok->out, STDOUT_FILENO) == -1)
+	// 		return (ft_perror(EXIT_FAILURE, "dup error"));
+	// }
+
+	if (exp_tok->fd_to_close != -1)
 	{
-		s = dup(STDOUT_FILENO);
-		if (s == -1 || dup2(exp_tok->out, STDOUT_FILENO) == -1)
-			return (ft_perror(EXIT_FAILURE, "dup error"));
+		close(exp_tok->fd_to_close);
 	}
-	status = execve(abs_cmd_path, exp_tok->cmd, get_envar()->env_var);
-	perror(NULL);
+
 	if (exp_tok->in != STDIN_FILENO)
 	{
+		dup2(exp_tok->in, STDIN_FILENO);
 		close(exp_tok->in);
-		dup2(0, exp_tok->in);
 	}
+
 	if (exp_tok->out != STDOUT_FILENO)
 	{
-		dup2(s, STDOUT_FILENO);
-		close(s);
+		dup2(exp_tok->out, STDOUT_FILENO);
+		close(exp_tok->out);
 	}
-	exit(status);
+
+	status = execve(abs_cmd_path, exp_tok->cmd, get_envar()->env_var);
+	perror(NULL);
+	// if (exp_tok->in != STDIN_FILENO)
+	// {
+	// 	close(exp_tok->in);
+	// 	dup2(0, exp_tok->in);
+	// }
+	// if (exp_tok->out != STDOUT_FILENO)
+	// {
+	// 	dup2(s, STDOUT_FILENO);
+	// 	close(s);
+	// }
+	// exit(status);
 	return (status);
 }
 
@@ -139,6 +157,7 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
 	pid_t	pid;
 	int		exit_status;
 
+	exit_status = EXIT_SUCCESS;
 	pid = fork();
 	if (pid == -1)
 		return (EXIT_FAILURE);
@@ -148,7 +167,7 @@ int	execute_builtin_child(t_exp_tok *exp_tok)
 		exit(exit_status);
 		return (exit_status);
 	}
-	waitpid(pid, &exit_status, 0);
+	// waitpid(pid, &exit_status, 0);
 	return (exit_status);
 }
 

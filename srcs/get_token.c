@@ -125,8 +125,7 @@ int	get_token_redir(char *lex_token[], t_iter *iter)
 		return (EXIT_SUCCESS);
 	if (init_current_pars_token() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	get_current_par_token()->redir_type \
-	[get_token_redir_type(lex_token[iter[lex]])] = true;
+	get_current_par_token()->redir_type = get_token_redir_type(lex_token[iter[lex]]);
 	(*buff_size) += 2;
 	*buff = ft_str_arr_realloc(*buff, *buff_size);
 	if (*buff == NULL)
@@ -254,6 +253,7 @@ int	get_token_type(char *token, t_iter *iter)
 {
 	t_par_tok	*par_tok;
 
+	par_tok->redir_type = NONE;
 	if (token == NULL)
 		return (EXIT_SUCCESS);
 	if (init_current_pars_token() == EXIT_FAILURE)
@@ -264,14 +264,14 @@ int	get_token_type(char *token, t_iter *iter)
 		if (ft_strchr(token, '|'))
 			return (set_tok_type_pipe(par_tok, iter));
 		if (ft_strchr(token, '<'))
-			par_tok->redir_type[is_in] = true;
+			par_tok->redir_type = IS_IN;
 		if (ft_strchr(token, '>'))
-			par_tok->redir_type[is_out] = true;
+			par_tok->redir_type = IS_OUT;
 	}
 	if (ft_strlen(token) == 2 && ft_strstr(token, "<<"))
-		par_tok->redir_type[is_in_heredoc] = true;
+		par_tok->redir_type = IS_IN_HEREDOC;
 	if (ft_strlen(token) == 2 && ft_strstr(token, ">>"))
-		par_tok->redir_type[is_out_append] = true;
+		par_tok->redir_type = IS_OUT_APPEND;
 	if ((token[0] != '\'' && token[0] != '\"')
 		&& (ft_strchr(token, '(') && ft_strchr(token, ')')))
 		par_tok->type = subshell;

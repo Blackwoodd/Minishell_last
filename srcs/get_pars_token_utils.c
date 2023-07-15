@@ -18,12 +18,12 @@
 
 int	set_tok_type_pipe(t_par_tok *pars_token, t_iter *iter)
 {
-	pars_token->redir_type[is_pipe] = true;
+	pars_token->redir_type = IS_PIPE;
 	iter[lex]++;
 	iter[par]++;
 	if (init_current_pars_token() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	get_current_par_token()->redir_type[is_pipe] = true;
+	get_current_par_token()->redir_type = IS_PIPE;
 	return (EXIT_BREAK);
 }
 

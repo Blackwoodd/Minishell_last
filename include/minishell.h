@@ -54,23 +54,32 @@ typedef enum e_parser_tok_type
 
 typedef enum e_pars_redir_type
 {
-	is_pipe = 0,
-	is_in = 1,
-	is_in_heredoc = 2,
-	is_out = 3,
-	is_out_append = 4,
+	NONE = 0,
+	IS_PIPE = 1,
+	IS_IN = 2,
+	IS_IN_HEREDOC = 3,
+	IS_OUT = 4,
+	IS_OUT_APPEND = 5,
 }	t_redir_type;
+
+typedef enum e_pipe_type {
+	NOT_PIPE = -1,
+	START_PIPE = 0,
+	MIDDLE_PIPE = 1,
+	END_PIPE = 2,
+} t_pipe_type;
 
 typedef struct s_parser_tok
 {
 	t_par_tok_type	type;
-	t_redir_type	redir_type[5];
+	t_redir_type	redir_type;
 	char			**cmd;
 	size_t			cmd_size;
 	char			**in;
 	size_t			in_size;
 	char			**out;
 	size_t			out_size;
+	int				heredoc;
 }	t_par_tok;
 
 typedef struct s_env
@@ -97,7 +106,8 @@ typedef struct s_expander_tokens
 	int				in;
 	int				out;
 	bool			is_pipe;
-	int				*pids;
+	int				fd_to_close;
+	int				pid;
 }	t_exp_tok;
 
 //////////////////// strucure-quote  //////////////
@@ -305,7 +315,7 @@ int			handle_builtin_redirection(t_exp_tok *exp_tok, t_exp_tok **exp_toks);
 
 ////////////////// handle_pipe.c //////////////////
 
-int			handle_pipes(t_exp_tok *exp_tok, int pipe_type);
+int			handle_pipes(t_exp_tok *exp_tok, t_pipe_type pipe_type);
 
 //////////////// expander.c//////////////////////
 
@@ -314,7 +324,7 @@ int			expander(t_par_tok *pars_token[]);
 
 ////////////////// handle_redirection.c //////////
 
-int			handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type);
+int			handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, t_pipe_type pipe_type);
 
 ////////////////// exit.c /////////////////////
 

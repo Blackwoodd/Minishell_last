@@ -62,7 +62,7 @@ int	exec_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 		return (execute_child(exp_tok, abs_cmd_path, estatus));
-	waitpid(pid, &estatus, 0);
+	exp_tok->pid = pid;
 	global_signal();
 	return (WEXITSTATUS(estatus));
 }
