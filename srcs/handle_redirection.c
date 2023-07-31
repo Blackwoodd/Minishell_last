@@ -192,7 +192,21 @@ static int	open_out(t_par_tok *par_token, t_exp_tok *exp_tok)
 int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, t_pipe_type pipe_type)
 {
 	int	exit_status;
+	int	dev_null;
+	int	saved_stderr;
+	int	saved_stdout;
 
+	dev_null = open("/dev/null", O_WRONLY);
+	if (dev_null == -1)
+	{
+		perror("open");
+		return (EXIT_FAILURE);
+	}
+	saved_stdout = dup(STDOUT_FILENO);
+	saved_stderr = dup(STDERR_FILENO);
+	dup2(dev_null, STDOUT_FILENO);
+	dup2(dev_null, STDERR_FILENO);
+	close(dev_null);
 	if (open_in(par_tok, exp_tok) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (open_out(par_tok, exp_tok) == EXIT_FAILURE)
@@ -203,12 +217,14 @@ int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, t_pipe_type pipe_type)
 		exp_tok->is_pipe = true;
 	else
 		exp_tok->is_pipe = false;
-	if (par_tok->type == subshell)
-		return (execute_subshell(exp_tok));
 	exit_status = ft_execute(exp_tok, NULL);
+	dup2(saved_stdout, STDOUT_FILENO);
+	dup2(saved_stderr, STDERR_FILENO);
+	close(saved_stderr);
+	close(saved_stdout);
 	if (exp_tok->in != STDIN_FILENO)
 		close(exp_tok->in);
 	if (exp_tok->out != STDOUT_FILENO)
-		close (exp_tok->out);
+		close(exp_tok->out);
 	return (exit_status);
 }
