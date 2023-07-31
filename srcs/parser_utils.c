@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:40:26 by nassm             #+#    #+#             */
-/*   Updated: 2023/07/05 16:13:33 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/26 14:55:57 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-	The function s responsible for initializing the current t_par_tok token.
-*/
 
 int	init_current_pars_token(void)
 {
@@ -34,11 +30,6 @@ int	init_current_pars_token(void)
 	return (EXIT_SUCCESS);
 }
 
-/*
-	The function is responsible for freeing the memory allocated for
-	t_par_tok tokens.
-*/
-
 int	free_pars_token(t_par_tok *pars_token[], int exit_code)
 {
 	int	i;
@@ -56,11 +47,6 @@ int	free_pars_token(t_par_tok *pars_token[], int exit_code)
 	return (exit_code);
 }
 
-/*
-	The function is responsible for freeing the memory allocated
-	for the parser-related data structures.
-*/
-
 int	free_parser(t_par_tok *pars_token[], t_iter *iter, int exit_status)
 {
 	free_pars_token(pars_token, 0);
@@ -69,27 +55,6 @@ int	free_parser(t_par_tok *pars_token[], t_iter *iter, int exit_status)
 	reset_pars_token();
 	return (exit_status);
 }
-
-/*
-	The function is used to determine the size of the token array
-	for the shell's syntax analysis.
-
-	* The function get_stoken_size returns a size_t value representing
-	the size of the token array.
-
-	* Inside the loop, it checks the length of each lex_token[i] string.
-
-	* If the length is 2, it further checks if the string contains specific
-	substrings such as "&&", "||", or "<<" using ft_strstr.
-	
-	* If the length is 1, it checks if the string contains specific characters
-	such as '|', '(', or ')', using ft_strchr.
-	
-	* Based on the conditions met, it increments the size variable accordingly.
-	
-	* After the loop, it adds 1 to the size to account for the null terminator
-	in the token array.
-*/
 
 size_t	get_stoken_size(char *lex_token[])
 {

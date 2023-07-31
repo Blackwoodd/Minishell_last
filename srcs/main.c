@@ -6,29 +6,11 @@
 /*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:15 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/12 14:52:04 by nbechon          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:46:56 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// static int	exit_core(void *to_free, int exit_status)
-// {
-// 	char	**args;
-
-// 	if (exit_status == EXIT_CTRL_D)
-// 	{
-// 		args = ft_calloc(3, sizeof(args));
-// 		args[0] = ft_strdup("exit");
-// 		args[1] = ft_itoa(get_err_code());
-// 		commande_exit(args, NULL, NULL);
-// 		ft_free_split(args);
-// 	}
-// 	rl_clear_history();
-// 	free(to_free);
-// 	free_envar(get_envar());
-// 	return (exit_status);
-// }
 
 static int	exit_core(void *to_free, int exit_status)
 {
@@ -74,35 +56,6 @@ static int	manage_flags(int ac, char *av[])
 	return (exit_code);
 }
 
-// static int	hide_ctrl_c(void)
-// {
-// 	t_exp_tok	*stty;
-
-// 	stty = malloc(sizeof(*stty));
-// 	if (stty == NULL)
-// 		return (EXIT_FAILURE);
-// 	stty->cmd = ft_calloc(3, sizeof(*stty->cmd));
-// 	if (stty->cmd == NULL)
-// 		return (EXIT_FAILURE);
-// 	stty->cmd[0] = ft_strdup("/bin/stty");
-// 	if (stty->cmd[0] == NULL)
-// 		return (EXIT_FAILURE);
-// 	stty->cmd[1] = ft_strdup("-echoctl");
-// 	if (stty->cmd[1] == NULL)
-// 		return (EXIT_FAILURE);
-// 	stty->in = STDIN_FILENO;
-// 	stty->out = STDOUT_FILENO;
-// 	if (ft_execute(stty, NULL) == EXIT_FAILURE)
-// 	{
-// 		ft_free_tab(stty->cmd);
-// 		free(stty);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	ft_free_tab(stty->cmd);
-// 	free(stty);
-// 	return (EXIT_SUCCESS);
-// }
-
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*envar;
@@ -113,8 +66,6 @@ int	main(int ac, char **av, char **envp)
 		return (EXIT_FAILURE);
 	set_envp(envp);
 	set_envar(envar);
-	// if (hide_ctrl_c() == EXIT_FAILURE)
-	// 	return (EXIT_FAILURE);
 	if (ac != 1)
 		return (manage_flags(ac, av));
 	if (core() == EXIT_FAILURE)

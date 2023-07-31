@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nassm <nassm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nbechon <nbechon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:10:07 by nbechon           #+#    #+#             */
-/*   Updated: 2023/07/07 12:15:30 by nassm            ###   ########.fr       */
+/*   Updated: 2023/07/27 15:03:42 by nbechon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
-
-# define ECHO "echo"
-# define ECHO_N "echo -n"
-# define CD "cd"
-# define PWD "pwd"
-# define EXIT "exit"
-# define ENV "env"
-# define EXPORT "export"
-# define UNSET "unset"
 
 # define EXIT_SYNTAX_ERROR 258
 # define EXIT_CMD_NOT_FOUND 127
@@ -73,6 +64,8 @@ typedef struct s_parser_tok
 {
 	t_par_tok_type	type;
 	t_redir_type	redir_type;
+	t_redir_type	out_redir;
+	t_redir_type	in_redir;
 	char			**cmd;
 	size_t			cmd_size;
 	char			**in;
@@ -88,7 +81,7 @@ typedef struct s_env
 	char	**env_var;
 	char	*pwd;
 	char	*oldpwd;
-	char 	**tmp_var;
+	char	**tmp_var;
 }			t_env;
 
 typedef enum e_iterator
@@ -108,6 +101,7 @@ typedef struct s_expander_tokens
 	bool			is_pipe;
 	int				fd_to_close;
 	int				pid;
+	bool 			is_builtin_cmd;
 }	t_exp_tok;
 
 //////////////////// strucure-quote  //////////////
